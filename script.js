@@ -1,39 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-  initNavbar();
-  initMobileMenu();
-  initScrollAnimations();
-  initContactForm();
-  setCurrentYear();
-  fetchPrayerTimes();
-  fetchDailyHadith();
-  setInterval(updateNextPrayer, 60000);
-});
-
-// ============================================
-// Navigation
-// ============================================
-function initNavbar() {
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-  });
-
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      document.getElementById('navMenu').classList.remove('active');
-      document.getElementById('navToggle').classList.remove('active');
-    });
-  });
-}
-
-function initMobileMenu() {
-  const toggle = document.getElementById('navToggle');
-  const menu = document.getElementById('navMenu');
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('active');
-    menu.classList.toggle('active');
-  });
-}
+// Navigation is now handled by components.js
 
 // ============================================
 // Prayer Times - Fetch from OIAC via proxy, fallback to Aladhan API

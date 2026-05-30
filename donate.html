@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate - Leduc Islamic Association</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="page-header-overlay"></div>
+    <div class="page-header-pattern"></div>
+    <div class="container">
+      <h1>Support Our Community</h1>
+      <p>Your generosity makes a difference</p>
+    </div>
+  </section>
+
+  <!-- Hadith on Charity -->
+  <section class="quote-banner">
+    <div class="container">
+      <div class="quote-content">
+        <i class="fas fa-quote-left quote-icon"></i>
+        <blockquote>
+          <p>"Charity does not decrease wealth."</p>
+          <cite>— Prophet Muhammad ﷺ (Sahih Muslim)</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donation Options -->
+  <section class="about">
+    <div class="container">
+      <div class="section-header">
+        <h2>Ways to Give</h2>
+        <p class="section-subtitle">Choose how you'd like to support the community</p>
+      </div>
+      <div class="donate-page-grid">
+        <div class="donate-page-card">
+          <div class="donate-page-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+          <h3>General Donation</h3>
+          <p>Support the overall operations and maintenance of the association, including utilities, supplies, and day-to-day running costs.</p>
+        </div>
+        <div class="donate-page-card">
+          <div class="donate-page-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Education Fund</h3>
+          <p>Help fund Islamic education programs for children and adults, including Quran classes, weekend school, and educational materials.</p>
+        </div>
+        <div class="donate-page-card">
+          <div class="donate-page-icon"><i class="fas fa-building"></i></div>
+          <h3>Building Fund</h3>
+          <p>Contribute to the growth and development of our facilities, helping us expand to better serve the growing community.</p>
+        </div>
+        <div class="donate-page-card">
+          <div class="donate-page-icon"><i class="fas fa-moon"></i></div>
+          <h3>Ramadan Fund</h3>
+          <p>Support our Ramadan programs including daily iftars, taraweeh prayers, and special Ramadan educational sessions.</p>
+        </div>
+        <div class="donate-page-card">
+          <div class="donate-page-icon"><i class="fas fa-hands-holding-child"></i></div>
+          <h3>Zakat</h3>
+          <p>Fulfill your Zakat obligation through the association. Funds are distributed to eligible recipients in accordance with Islamic guidelines.</p>
+        </div>
+        <div class="donate-page-card">
+          <div class="donate-page-icon"><i class="fas fa-gift"></i></div>
+          <h3>Sadaqah</h3>
+          <p>Give voluntary charity (sadaqah) to support community members in need and fund community outreach programs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Donate -->
+  <section class="services">
+    <div class="container">
+      <div class="section-header">
+        <h2>How to Donate</h2>
+      </div>
+      <div class="services-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-money-bill-transfer"></i></div>
+          <h3>E-Transfer</h3>
+          <p>Send an e-Transfer to:<br><strong>Leducislamicassociation@gmail.com</strong></p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-money-bill-wave"></i></div>
+          <h3>In Person</h3>
+          <p>Donate in person at the association during prayer times or events.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-phone"></i></div>
+          <h3>Contact Us</h3>
+          <p>Call us at <strong>(587) 274-2525</strong> for other donation arrangements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tax Receipts -->
+  <section class="about">
+    <div class="container">
+      <div class="tax-receipt-banner">
+        <i class="fas fa-receipt"></i>
+        <div>
+          <h3>Tax Receipts</h3>
+          <p>Tax receipts are available for eligible donations. Please provide your full name and mailing address when donating to receive your tax receipt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="components.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadComponents('Donate');
+      initScrollAnimations();
+    });
+  </script>
+</body>
+</html>

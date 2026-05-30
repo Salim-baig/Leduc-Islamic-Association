@@ -1254,6 +1254,314 @@ blockquote cite {
 }
 
 /* ============================================
+   Active Nav Link
+   ============================================ */
+.nav-link.active {
+  color: var(--gold) !important;
+  font-weight: 600;
+}
+
+.navbar.scrolled .nav-link.active {
+  color: var(--primary) !important;
+}
+
+/* ============================================
+   Page Header (subpages)
+   ============================================ */
+.page-header {
+  position: relative;
+  padding: 140px 0 60px;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+  text-align: center;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.page-header-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.page-header-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--gold) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, var(--gold) 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+}
+
+.page-header .container {
+  position: relative;
+  z-index: 2;
+}
+
+.page-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+/* ============================================
+   Multi-page Specific Styles
+   ============================================ */
+.values-full-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.values-full-grid .value-item {
+  text-align: center;
+  padding: 32px 20px;
+  border-radius: var(--radius);
+  background: var(--off-white);
+  transition: var(--transition);
+}
+
+.values-full-grid .value-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.values-full-grid .value-item i {
+  font-size: 2.2rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.values-full-grid .value-item h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin-bottom: 10px;
+}
+
+.values-full-grid .value-item p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 0;
+}
+
+.event-desc {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.stay-updated-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.stay-updated-grid .service-card {
+  text-align: center;
+}
+
+.jumah-info {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.jumah-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--gold);
+}
+
+.jumah-card i {
+  font-size: 3rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.jumah-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.jumah-time {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 16px;
+}
+
+.jumah-card p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.location-card {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.location-info {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.location-info > i {
+  font-size: 2rem;
+  color: var(--gold);
+  margin-top: 4px;
+}
+
+.location-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+}
+
+.location-info p {
+  color: var(--text-light);
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.location-info p i {
+  color: var(--gold);
+  width: 18px;
+  margin-right: 6px;
+}
+
+.map-container {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.donate-page-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.donate-page-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.donate-page-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold);
+}
+
+.donate-page-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.6rem;
+  color: var(--white);
+}
+
+.donate-page-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+}
+
+.donate-page-card p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.tax-receipt-banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--off-white);
+  border: 2px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+.tax-receipt-banner > i {
+  font-size: 2.5rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.tax-receipt-banner h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.tax-receipt-banner p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* Multi-page responsive */
+@media (max-width: 1024px) {
+  .values-full-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .donate-page-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .location-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 120px 0 50px;
+  }
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  .values-full-grid {
+    grid-template-columns: 1fr;
+  }
+  .stay-updated-grid {
+    grid-template-columns: 1fr;
+  }
+  .donate-page-grid {
+    grid-template-columns: 1fr;
+  }
+  .tax-receipt-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* ============================================
    Animations
    ============================================ */
 @keyframes fadeInUp {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leduc Islamic Association</title>
+  <title>Prayer Times - Leduc Islamic Association</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,34 +14,26 @@
 
   <div id="nav-placeholder"></div>
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <div class="hero-overlay"></div>
-    <div class="hero-pattern"></div>
-    <div class="hero-content">
-      <p class="hero-arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-      <h1>Welcome to Leduc Islamic Association</h1>
-      <p class="hero-subtitle">Building a stronger community through faith, education, and service</p>
-      <div class="hero-buttons">
-        <a href="prayer-times.html" class="btn btn-primary">Prayer Times</a>
-        <a href="about.html" class="btn btn-secondary">Learn More</a>
-      </div>
-    </div>
-    <div class="hero-scroll">
-      <a href="#prayer-overview"><i class="fas fa-chevron-down"></i></a>
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="page-header-overlay"></div>
+    <div class="page-header-pattern"></div>
+    <div class="container">
+      <h1>Daily Prayer Times</h1>
+      <p>Stay connected with your daily prayers</p>
     </div>
   </section>
 
-  <!-- Prayer Times Overview -->
-  <section class="prayer-times" id="prayer-overview">
+  <!-- Prayer Times -->
+  <section class="prayer-times">
     <div class="container">
       <div class="section-header">
-        <h2>Daily Prayer Times</h2>
         <div class="date-display">
           <span id="islamicDate" class="islamic-date"></span>
           <span id="gregorianDate" class="gregorian-date"></span>
         </div>
       </div>
+
       <div class="prayer-grid" id="prayerGrid">
         <div class="prayer-card" data-prayer="fajr">
           <div class="prayer-icon"><i class="fas fa-cloud-moon"></i></div>
@@ -79,73 +71,54 @@
           <div class="prayer-time"><div class="time-label">Iqamah</div><div class="time-value iqamah" id="ishaIqamah">--:--</div></div>
         </div>
       </div>
+
       <div class="prayer-source">
         <div class="next-prayer" id="nextPrayer"></div>
       </div>
     </div>
   </section>
 
-  <!-- Daily Hadith Banner -->
-  <section class="quote-banner">
+  <!-- Jumu'ah Info -->
+  <section class="about">
     <div class="container">
-      <div class="quote-content">
-        <i class="fas fa-quote-left quote-icon"></i>
-        <blockquote>
-          <p id="dailyHadithText">"The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended."</p>
-          <cite id="dailyHadithSource">— Sahih al-Bukhari</cite>
-        </blockquote>
+      <div class="section-header">
+        <h2>Friday Jumu'ah Prayer</h2>
       </div>
-    </div>
-  </section>
-
-  <!-- Quick About Preview -->
-  <section class="about" id="about-preview">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-content">
-          <div class="section-header left-align">
-            <h2>About Our Community</h2>
-          </div>
-          <p>The Leduc Islamic Association serves as a spiritual home for Muslims in Leduc and surrounding areas. We are dedicated to fostering a vibrant, inclusive, and welcoming community rooted in the teachings of Islam.</p>
-          <p>Our mission is to provide a place of worship, education, and community engagement where individuals and families can grow in faith, knowledge, and service to others.</p>
-          <a href="about.html" class="btn btn-primary" style="margin-top: 24px;">Learn More About Us</a>
-        </div>
-        <div class="about-image">
-          <div class="image-placeholder">
-            <i class="fas fa-mosque"></i>
-            <p>Leduc Islamic Association</p>
-          </div>
+      <div class="jumah-info">
+        <div class="jumah-card">
+          <i class="fas fa-mosque"></i>
+          <h3>Jumu'ah Salah</h3>
+          <p class="jumah-time">1:30 PM</p>
+          <p>Join us every Friday for the congregational Jumu'ah prayer and khutbah at Leduc Islamic Association.</p>
+          <p><i class="fas fa-location-dot"></i> #4 5210-50 Ave, Leduc, AB T9E 6V2</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Quick Services Preview -->
+  <!-- Prayer Guidelines -->
   <section class="services">
     <div class="container">
       <div class="section-header">
-        <h2>Our Services</h2>
-        <p class="section-subtitle">Programs and services for the community</p>
+        <h2>Prayer Guidelines</h2>
+        <p class="section-subtitle">Important reminders for our community</p>
       </div>
       <div class="services-grid">
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-mosque"></i></div>
-          <h3>Daily Prayers</h3>
-          <p>Five daily congregational prayers in a welcoming and spiritual environment.</p>
+          <div class="service-icon"><i class="fas fa-clock"></i></div>
+          <h3>Arrive Early</h3>
+          <p>Please arrive a few minutes before the Iqamah time to settle in and prepare for prayer.</p>
         </div>
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-book-open"></i></div>
-          <h3>Quran Classes</h3>
-          <p>Weekly Quran recitation and memorization classes for children and adults.</p>
+          <div class="service-icon"><i class="fas fa-shoe-prints"></i></div>
+          <h3>Shoe Racks</h3>
+          <p>Please use the shoe racks provided at the entrance and keep the prayer area clean.</p>
         </div>
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-hands-praying"></i></div>
-          <h3>Friday Jumu'ah</h3>
-          <p>Weekly Friday congregational prayer and sermon (khutbah).</p>
+          <div class="service-icon"><i class="fas fa-mobile-screen"></i></div>
+          <h3>Silent Phones</h3>
+          <p>Kindly silence your mobile phones before entering the prayer hall.</p>
         </div>
-      </div>
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="services.html" class="btn btn-primary">View All Services</a>
       </div>
     </div>
   </section>
@@ -156,9 +129,8 @@
   <script src="script.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      loadComponents('Home');
+      loadComponents('Prayer Times');
       fetchPrayerTimes();
-      fetchDailyHadith();
       initScrollAnimations();
       setInterval(updateNextPrayer, 60000);
     });
