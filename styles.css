@@ -1,0 +1,1279 @@
+/* ============================================
+   CSS Variables & Reset
+   ============================================ */
+:root {
+  --primary: #1a5632;
+  --primary-dark: #0e3a20;
+  --primary-light: #2d7a4a;
+  --gold: #c9a84c;
+  --gold-light: #e0c76e;
+  --gold-dark: #a8872e;
+  --dark: #1a1a2e;
+  --dark-light: #2d2d44;
+  --text: #333333;
+  --text-light: #666666;
+  --text-muted: #999999;
+  --white: #ffffff;
+  --off-white: #f8f6f0;
+  --cream: #faf8f2;
+  --border: #e8e4da;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: all 0.3s ease;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  background: var(--white);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  line-height: 1.3;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  display: inline-block;
+  padding: 14px 36px;
+  border-radius: 50px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--dark);
+  border-color: var(--gold);
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.btn-secondary:hover {
+  background: var(--white);
+  color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  transition: var(--transition);
+  padding: 15px 0;
+}
+
+.navbar.scrolled {
+  background: var(--white);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1001;
+}
+
+.logo-icon {
+  width: 45px;
+  height: 45px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--dark);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-main {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--white);
+  transition: var(--transition);
+}
+
+.logo-sub {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.navbar.scrolled .logo-main {
+  color: var(--primary-dark);
+}
+
+.navbar.scrolled .logo-sub {
+  color: var(--text-light);
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 8px;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--gold);
+}
+
+.navbar.scrolled .nav-link {
+  color: var(--text);
+}
+
+.navbar.scrolled .nav-link:hover {
+  color: var(--primary);
+}
+
+.nav-donate {
+  background: var(--gold) !important;
+  color: var(--dark) !important;
+  border-radius: 50px !important;
+  padding: 8px 24px !important;
+  font-weight: 600 !important;
+}
+
+.nav-donate:hover {
+  background: var(--gold-light) !important;
+  transform: translateY(-1px);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 5px;
+}
+
+.nav-toggle span {
+  width: 25px;
+  height: 2px;
+  background: var(--white);
+  transition: var(--transition);
+}
+
+.navbar.scrolled .nav-toggle span {
+  background: var(--dark);
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--gold) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, var(--gold) 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--white);
+  padding: 0 20px;
+  max-width: 800px;
+}
+
+.hero-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  opacity: 0.9;
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.hero-scroll a {
+  color: var(--white);
+  font-size: 1.5rem;
+  opacity: 0.6;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+/* ============================================
+   Section Headers
+   ============================================ */
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-header.left-align {
+  text-align: left;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.section-header.left-align h2::after {
+  left: 0;
+  transform: none;
+}
+
+.section-subtitle {
+  color: var(--text-light);
+  font-size: 1.05rem;
+  margin-top: 16px;
+}
+
+/* ============================================
+   Prayer Times
+   ============================================ */
+.prayer-times {
+  padding: 100px 0 80px;
+  background: var(--off-white);
+}
+
+.date-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.islamic-date {
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.gregorian-date {
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.prayer-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.prayer-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.prayer-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.prayer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.prayer-card:hover::before {
+  opacity: 1;
+}
+
+.prayer-card.active {
+  border-color: var(--gold);
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.2);
+}
+
+.prayer-card.active::before {
+  opacity: 1;
+  background: var(--gold);
+}
+
+.prayer-icon {
+  font-size: 1.8rem;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.prayer-card h3 {
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+}
+
+.prayer-time {
+  margin-bottom: 8px;
+}
+
+.time-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.time-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-family: 'Playfair Display', serif;
+}
+
+.time-value.iqamah {
+  color: var(--gold-dark);
+  font-size: 1rem;
+}
+
+.prayer-source {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.prayer-source a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.prayer-source a:hover {
+  color: var(--gold-dark);
+}
+
+.next-prayer {
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+/* ============================================
+   Quote Banner
+   ============================================ */
+.quote-banner {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: radial-gradient(circle, var(--gold) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.quote-content {
+  position: relative;
+  text-align: center;
+  color: var(--white);
+}
+
+.quote-icon {
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+blockquote p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+blockquote cite {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--gold);
+  font-style: normal;
+}
+
+.hadith-badge {
+  margin-top: 24px;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  letter-spacing: 0.5px;
+}
+
+.hadith-badge a {
+  color: var(--gold-light);
+  text-decoration: underline;
+}
+
+.hadith-badge a:hover {
+  opacity: 1;
+}
+
+.hadith-badge i {
+  margin-right: 4px;
+}
+
+/* ============================================
+   About Section
+   ============================================ */
+.about {
+  padding: 100px 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about-content p {
+  color: var(--text-light);
+  margin-bottom: 16px;
+  font-size: 1.05rem;
+}
+
+.about-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.value-item {
+  text-align: center;
+  padding: 24px 12px;
+  border-radius: var(--radius);
+  background: var(--off-white);
+  transition: var(--transition);
+}
+
+.value-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.value-item i {
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.value-item h4 {
+  font-size: 1rem;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.value-item p {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 0;
+}
+
+.about-image {
+  position: relative;
+}
+
+.image-placeholder {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  border-radius: var(--radius);
+  padding: 80px 40px;
+  text-align: center;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.image-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image: radial-gradient(circle, var(--gold) 1px, transparent 1px);
+  background-size: 25px 25px;
+}
+
+.image-placeholder i {
+  font-size: 5rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.image-placeholder p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  position: relative;
+}
+
+/* ============================================
+   Services Section
+   ============================================ */
+.services {
+  padding: 100px 0;
+  background: var(--off-white);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.service-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: 1px solid var(--border);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.service-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.6rem;
+  color: var(--white);
+}
+
+.service-card h3 {
+  font-size: 1.15rem;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+}
+
+.service-card p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   Events Section
+   ============================================ */
+.events {
+  padding: 100px 0;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.event-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: flex;
+  gap: 20px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: 1px solid var(--border);
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.event-card.featured {
+  border-color: var(--gold);
+}
+
+.event-date {
+  min-width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.event-card.featured .event-date {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+}
+
+.event-day {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.event-month {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.event-info h3 {
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.event-info p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.event-info i {
+  width: 16px;
+  color: var(--gold);
+  margin-right: 6px;
+}
+
+/* ============================================
+   Donate Section
+   ============================================ */
+.donate {
+  padding: 100px 0;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.donate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(circle at 20% 50%, var(--gold) 2px, transparent 2px),
+    radial-gradient(circle at 80% 50%, var(--gold) 1.5px, transparent 1.5px);
+  background-size: 50px 50px;
+}
+
+.donate-content {
+  position: relative;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.donate-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  color: var(--white);
+}
+
+.donate-content > p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 40px;
+}
+
+.donate-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.donate-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: var(--transition);
+}
+
+.donate-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.donate-card i {
+  font-size: 2.2rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.donate-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: var(--white);
+}
+
+.donate-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.donate-note {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.donate-note i {
+  margin-right: 6px;
+}
+
+/* ============================================
+   Contact Section
+   ============================================ */
+.contact {
+  padding: 100px 0;
+  background: var(--off-white);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 50px;
+  align-items: start;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.contact-item i {
+  width: 45px;
+  height: 45px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.contact-item h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.contact-item a,
+.contact-item p {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.contact-item a:hover {
+  color: var(--primary);
+}
+
+.contact-form {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 36px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: var(--transition);
+  background: var(--off-white);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form .btn {
+  width: 100%;
+  text-align: center;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+  background: var(--dark);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 60px 0 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.footer-logo i {
+  font-size: 1.5rem;
+  color: var(--gold);
+}
+
+.footer-logo span {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.footer-about p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  transition: var(--transition);
+}
+
+.social-links a:hover {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  color: var(--white);
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+}
+
+.footer-links ul,
+.footer-contact ul {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+  padding-left: 4px;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.footer-contact i {
+  color: var(--gold);
+  margin-top: 4px;
+  width: 16px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 1024px) {
+  .prayer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .donate-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--white);
+    flex-direction: column;
+    padding: 100px 30px 30px;
+    gap: 4px;
+    transition: var(--transition);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-link {
+    color: var(--text) !important;
+    padding: 12px 16px;
+    font-size: 1rem;
+    display: block;
+  }
+
+  .nav-link:hover {
+    background: var(--off-white);
+    color: var(--primary) !important;
+  }
+
+  .nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-arabic {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .prayer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .about-values {
+    grid-template-columns: 1fr;
+  }
+
+  .donate-options {
+    grid-template-columns: 1fr;
+  }
+
+  blockquote p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .prayer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    padding: 12px 28px;
+    font-size: 0.9rem;
+  }
+
+  .logo-main {
+    font-size: 1rem;
+  }
+
+  .logo-sub {
+    display: none;
+  }
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
