@@ -36,6 +36,15 @@
       font-size: 0.95rem;
       margin-bottom: 28px;
     }
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* Amount Grid */
     .amount-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -55,26 +64,15 @@
       transition: var(--transition);
       text-align: center;
     }
-    .amount-btn:hover {
-      border-color: var(--gold);
-      background: #fefce8;
-    }
-    .amount-btn.selected {
-      border-color: var(--primary);
-      background: var(--primary);
-      color: var(--white);
-    }
+    .amount-btn:hover { border-color: var(--gold); background: #fefce8; }
+    .amount-btn.selected { border-color: var(--primary); background: var(--primary); color: var(--white); }
     .custom-amount-row {
       display: flex;
       align-items: center;
       gap: 8px;
       margin-bottom: 24px;
     }
-    .custom-amount-row span {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text);
-    }
+    .custom-amount-row span { font-size: 1.2rem; font-weight: 700; color: var(--text); }
     .custom-amount-row input {
       flex: 1;
       padding: 14px 16px;
@@ -85,11 +83,9 @@
       color: var(--text);
       transition: var(--transition);
     }
-    .custom-amount-row input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
-    }
+    .custom-amount-row input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1); }
+
+    /* Category Select */
     .donate-category-select {
       width: 100%;
       padding: 14px 16px;
@@ -102,11 +98,68 @@
       margin-bottom: 24px;
       transition: var(--transition);
     }
-    .donate-category-select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
+    .donate-category-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1); }
+
+    /* Donor Info */
+    .donor-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
     }
+
+    /* Card Fields */
+    .card-fields { margin-bottom: 24px; }
+    .card-number-row { margin-bottom: 12px; }
+    .card-detail-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .card-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--off-white);
+      transition: var(--transition);
+    }
+    .card-input:focus { outline: none; border-color: var(--primary); background: var(--white); box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1); }
+    .card-input.error { border-color: #dc2626; }
+    .card-input-icon {
+      position: relative;
+    }
+    .card-input-icon i {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    .card-input-icon input { padding-right: 44px; }
+    .card-brands {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .card-brands i {
+      font-size: 1.6rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .card-brands i.active { color: var(--primary); }
+    .form-error {
+      color: #dc2626;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      min-height: 20px;
+    }
+
+    /* Pay Button */
     .stripe-pay-btn {
       width: 100%;
       padding: 16px;
@@ -124,17 +177,8 @@
       justify-content: center;
       gap: 10px;
     }
-    .stripe-pay-btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(26, 86, 50, 0.3);
-    }
-    .stripe-pay-btn:disabled {
-      background: #d1d5db;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
+    .stripe-pay-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(26, 86, 50, 0.3); }
+    .stripe-pay-btn:disabled { background: #d1d5db; cursor: not-allowed; transform: none; box-shadow: none; }
     .payment-secure {
       text-align: center;
       margin-top: 16px;
@@ -145,78 +189,22 @@
       justify-content: center;
       gap: 6px;
     }
-    .payment-secure i {
-      color: var(--primary);
-    }
-    .donate-offline-note {
-      display: none;
-      text-align: center;
-      padding: 40px;
-      background: var(--off-white);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .donate-offline-note i {
-      font-size: 2.5rem;
-      color: var(--gold);
-      margin-bottom: 16px;
-    }
-    .donate-offline-note h3 {
-      font-family: 'Playfair Display', serif;
-      color: var(--primary-dark);
-      margin-bottom: 12px;
-    }
-    .donate-offline-note p {
-      color: var(--text-light);
-      font-size: 0.95rem;
-    }
-    #stripeCardElement {
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--off-white);
-      margin-bottom: 16px;
-      transition: var(--transition);
-    }
-    #stripeCardElement.StripeElement--focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
-    }
-    .card-errors {
-      color: #dc2626;
+    .payment-secure i { color: var(--primary); }
+
+    /* Divider */
+    .form-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 20px 0;
+      color: var(--text-muted);
       font-size: 0.85rem;
-      margin-bottom: 12px;
-      min-height: 20px;
     }
-    .donor-info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .donor-info-grid input {
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: 'Open Sans', sans-serif;
-      font-size: 0.95rem;
-      color: var(--text);
-      background: var(--off-white);
-      transition: var(--transition);
-    }
-    .donor-info-grid input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
-    }
-    .form-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      display: block;
+    .form-divider::before, .form-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
 
     /* Success Modal */
@@ -231,9 +219,7 @@
       padding: 20px;
       backdrop-filter: blur(4px);
     }
-    .success-overlay.show {
-      display: flex;
-    }
+    .success-overlay.show { display: flex; }
     .success-modal {
       background: var(--white);
       border-radius: var(--radius);
@@ -293,16 +279,9 @@
       font-size: 0.9rem;
       color: var(--text);
     }
-    .success-details .detail-row:not(:last-child) {
-      border-bottom: 1px solid var(--border);
-    }
-    .success-details .detail-label {
-      color: var(--text-muted);
-    }
-    .success-details .detail-value {
-      font-weight: 600;
-      color: var(--primary-dark);
-    }
+    .success-details .detail-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+    .success-details .detail-label { color: var(--text-muted); }
+    .success-details .detail-value { font-weight: 600; color: var(--primary-dark); }
     .receipt-section {
       border-top: 1px solid var(--border);
       padding-top: 24px;
@@ -335,11 +314,7 @@
       background: var(--off-white);
       transition: var(--transition);
     }
-    .receipt-email-row input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
-    }
+    .receipt-email-row input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1); }
     .receipt-email-row button {
       padding: 12px 24px;
       background: var(--primary);
@@ -353,9 +328,7 @@
       transition: var(--transition);
       white-space: nowrap;
     }
-    .receipt-email-row button:hover {
-      background: var(--primary-dark);
-    }
+    .receipt-email-row button:hover { background: var(--primary-dark); }
     .receipt-sent {
       display: none;
       align-items: center;
@@ -384,9 +357,7 @@
       transition: var(--transition);
       margin-top: 16px;
     }
-    .success-close-btn:hover {
-      background: var(--border);
-    }
+    .success-close-btn:hover { background: var(--border); }
     .modal-close-x {
       position: absolute;
       top: 16px;
@@ -404,6 +375,7 @@
     @media (max-width: 480px) {
       .amount-grid { grid-template-columns: repeat(2, 1fr); }
       .donor-info-grid { grid-template-columns: 1fr; }
+      .card-detail-row { grid-template-columns: 1fr 1fr; }
       .donate-form-card { padding: 28px 20px; }
       .success-modal { padding: 36px 24px; }
       .receipt-email-row { flex-direction: column; }
@@ -445,44 +417,82 @@
         <p class="section-subtitle">Make a secure donation with your credit card</p>
       </div>
 
-      <!-- Show when payments enabled -->
       <div class="donate-form-card" id="donateFormCard">
         <h3><i class="fas fa-heart" style="color: var(--gold);"></i> Make a Donation</h3>
-        <p class="form-subtitle">Select an amount and category</p>
+        <p class="form-subtitle">Select an amount and fill in your details</p>
 
+        <!-- Step 1: Amount -->
         <label class="form-label">Select Amount</label>
-        <div class="amount-grid" id="amountGrid"></div>
+        <div class="amount-grid" id="amountGrid">
+          <button class="amount-btn" data-amount="25">$25</button>
+          <button class="amount-btn" data-amount="50">$50</button>
+          <button class="amount-btn" data-amount="100">$100</button>
+          <button class="amount-btn" data-amount="250">$250</button>
+          <button class="amount-btn" data-amount="500">$500</button>
+          <button class="amount-btn" data-amount="1000">$1000</button>
+        </div>
         <div class="custom-amount-row">
           <span>$</span>
-          <input type="number" id="customAmount" placeholder="Custom amount" min="1" step="0.01">
+          <input type="number" id="customAmount" placeholder="Or enter custom amount" min="1" step="0.01">
         </div>
 
+        <!-- Step 2: Category -->
         <label class="form-label">Donation Category</label>
-        <select class="donate-category-select" id="donateCategory"></select>
+        <select class="donate-category-select" id="donateCategory">
+          <option value="General Donation">General Donation</option>
+          <option value="Education Fund">Education Fund</option>
+          <option value="Building Fund">Building Fund</option>
+          <option value="Ramadan Fund">Ramadan Fund</option>
+          <option value="Zakat">Zakat</option>
+          <option value="Sadaqah">Sadaqah</option>
+        </select>
 
-        <label class="form-label">Your Information</label>
+        <div class="form-divider">Your Information</div>
+
+        <!-- Step 3: Personal Info -->
         <div class="donor-info-grid">
-          <input type="text" id="donorName" placeholder="Full Name" required>
-          <input type="email" id="donorEmail" placeholder="Email Address" required>
+          <input class="card-input" type="text" id="donorName" placeholder="Full Name" required>
+          <input class="card-input" type="email" id="donorEmail" placeholder="Email Address" required>
         </div>
 
-        <label class="form-label">Card Details</label>
-        <div id="stripeCardElement"></div>
-        <div class="card-errors" id="cardErrors"></div>
+        <div class="form-divider">Card Details</div>
 
-        <button class="stripe-pay-btn" id="payBtn" disabled>
+        <!-- Step 4: Card Details -->
+        <div class="card-brands">
+          <i class="fab fa-cc-visa" id="brandVisa"></i>
+          <i class="fab fa-cc-mastercard" id="brandMC"></i>
+          <i class="fab fa-cc-amex" id="brandAmex"></i>
+          <i class="fab fa-cc-discover" id="brandDiscover"></i>
+        </div>
+
+        <div class="card-fields">
+          <div class="card-number-row card-input-icon">
+            <input class="card-input" type="text" id="cardNumber" placeholder="Card Number" maxlength="19" inputmode="numeric" autocomplete="cc-number">
+            <i class="fas fa-credit-card"></i>
+          </div>
+
+          <div class="card-detail-row">
+            <div>
+              <input class="card-input" type="text" id="cardExpiry" placeholder="MM / YY" maxlength="7" inputmode="numeric" autocomplete="cc-exp">
+            </div>
+            <div class="card-input-icon">
+              <input class="card-input" type="text" id="cardCVC" placeholder="CVC" maxlength="4" inputmode="numeric" autocomplete="cc-csc">
+              <i class="fas fa-lock" style="font-size: 0.9rem;"></i>
+            </div>
+            <div>
+              <input class="card-input" type="text" id="cardZip" placeholder="Postal Code" maxlength="7" autocomplete="postal-code">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-error" id="formError"></div>
+
+        <button class="stripe-pay-btn" id="payBtn">
           <i class="fas fa-lock"></i> <span id="payBtnText">Donate Now</span>
         </button>
         <div class="payment-secure">
-          <i class="fas fa-shield-halved"></i> Secure payment powered by Stripe
+          <i class="fas fa-shield-halved"></i> Your payment information is secure and encrypted
         </div>
-      </div>
-
-      <!-- Show when payments not enabled -->
-      <div class="donate-offline-note" id="donateOffline">
-        <i class="fas fa-hand-holding-heart"></i>
-        <h3>Online Payments Coming Soon</h3>
-        <p>Online credit card donations are being set up. In the meantime, please use e-Transfer or donate in person.</p>
       </div>
     </div>
   </section>
@@ -550,8 +560,8 @@
           <span class="detail-value" id="successDonor">—</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Transaction ID</span>
-          <span class="detail-value" id="successTxnId">—</span>
+          <span class="detail-label">Card</span>
+          <span class="detail-value" id="successCard">—</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Date</span>
@@ -582,7 +592,6 @@
 
   <script src="components.js"></script>
   <script src="script.js"></script>
-  <script src="https://js.stripe.com/v3/"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       loadComponents('Donate');
@@ -590,165 +599,276 @@
       initDonationForm();
     });
 
-    let stripe, cardElement, selectedAmount = 0;
+    let selectedAmount = 0;
 
+    // ============================================
+    // Card Number Formatting & Brand Detection
+    // ============================================
+    function formatCardNumber(value) {
+      const digits = value.replace(/\D/g, '');
+      const groups = digits.match(/.{1,4}/g);
+      return groups ? groups.join(' ') : '';
+    }
+
+    function formatExpiry(value) {
+      const digits = value.replace(/\D/g, '');
+      if (digits.length >= 3) {
+        return digits.substring(0, 2) + ' / ' + digits.substring(2, 4);
+      }
+      return digits;
+    }
+
+    function detectCardBrand(number) {
+      const digits = number.replace(/\D/g, '');
+      document.querySelectorAll('.card-brands i').forEach(i => i.classList.remove('active'));
+      if (/^4/.test(digits)) {
+        document.getElementById('brandVisa').classList.add('active');
+        return 'visa';
+      } else if (/^5[1-5]/.test(digits) || /^2[2-7]/.test(digits)) {
+        document.getElementById('brandMC').classList.add('active');
+        return 'mastercard';
+      } else if (/^3[47]/.test(digits)) {
+        document.getElementById('brandAmex').classList.add('active');
+        return 'amex';
+      } else if (/^6(?:011|5)/.test(digits)) {
+        document.getElementById('brandDiscover').classList.add('active');
+        return 'discover';
+      }
+      return '';
+    }
+
+    function luhnCheck(num) {
+      const digits = num.replace(/\D/g, '');
+      let sum = 0;
+      let alternate = false;
+      for (let i = digits.length - 1; i >= 0; i--) {
+        let n = parseInt(digits[i]);
+        if (alternate) { n *= 2; if (n > 9) n -= 9; }
+        sum += n;
+        alternate = !alternate;
+      }
+      return sum % 10 === 0;
+    }
+
+    // ============================================
+    // Form Initialization
+    // ============================================
     function initDonationForm() {
       const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
 
-      if (!settings.enabled || !settings.stripeKey || !settings.stripeKey.startsWith('pk_')) {
-        document.getElementById('donateFormCard').style.display = 'none';
-        document.getElementById('donateOffline').style.display = 'block';
-        return;
+      // Load custom amounts if admin configured them
+      if (settings.amounts && settings.amounts.length > 0) {
+        const grid = document.getElementById('amountGrid');
+        grid.innerHTML = settings.amounts.map(amt =>
+          `<button class="amount-btn" data-amount="${amt}">$${amt}</button>`
+        ).join('');
       }
 
-      // Initialize Stripe
-      stripe = Stripe(settings.stripeKey);
-      const elements = stripe.elements();
-      cardElement = elements.create('card', {
-        style: {
-          base: {
-            fontSize: '16px',
-            fontFamily: '"Open Sans", sans-serif',
-            color: '#333333',
-            '::placeholder': { color: '#999999' },
-          },
-          invalid: { color: '#dc2626' },
-        }
-      });
-      cardElement.mount('#stripeCardElement');
-      cardElement.on('change', (event) => {
-        const errEl = document.getElementById('cardErrors');
-        errEl.textContent = event.error ? event.error.message : '';
+      // Load custom categories if admin configured them
+      if (settings.categories && settings.categories.length > 0) {
+        const select = document.getElementById('donateCategory');
+        select.innerHTML = settings.categories
+          .filter(c => c)
+          .map(c => `<option value="${c}">${c}</option>`)
+          .join('');
+      }
+
+      // Amount selection
+      document.getElementById('amountGrid').addEventListener('click', (e) => {
+        const btn = e.target.closest('.amount-btn');
+        if (!btn) return;
+        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedAmount = parseFloat(btn.dataset.amount);
+        document.getElementById('customAmount').value = '';
         updatePayButton();
       });
 
-      // Render amounts
-      const amounts = settings.amounts || [25, 50, 100, 250, 500];
-      const grid = document.getElementById('amountGrid');
-      grid.innerHTML = amounts.map(amt =>
-        `<button class="amount-btn" data-amount="${amt}">$${amt}</button>`
-      ).join('');
-
-      grid.querySelectorAll('.amount-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          grid.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          selectedAmount = parseInt(btn.dataset.amount);
-          document.getElementById('customAmount').value = '';
-          updatePayButton();
-        });
-      });
-
       document.getElementById('customAmount').addEventListener('input', (e) => {
-        grid.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
         selectedAmount = parseFloat(e.target.value) || 0;
         updatePayButton();
       });
 
-      // Render categories
-      const categories = settings.categories || ['General Donation', 'Education Fund', 'Building Fund', 'Ramadan Fund', 'Zakat', 'Sadaqah'];
-      const select = document.getElementById('donateCategory');
-      select.innerHTML = categories
-        .filter(c => c)
-        .map(c => `<option value="${c}">${c}</option>`)
-        .join('');
+      // Card number formatting
+      document.getElementById('cardNumber').addEventListener('input', (e) => {
+        const pos = e.target.selectionStart;
+        const prev = e.target.value;
+        e.target.value = formatCardNumber(e.target.value);
+        detectCardBrand(e.target.value);
+        // Keep cursor in right position
+        const diff = e.target.value.length - prev.length;
+        e.target.setSelectionRange(pos + diff, pos + diff);
+      });
+
+      // Expiry formatting
+      document.getElementById('cardExpiry').addEventListener('input', (e) => {
+        e.target.value = formatExpiry(e.target.value);
+      });
+
+      // CVC - numbers only
+      document.getElementById('cardCVC').addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '');
+      });
 
       // Pay button
       document.getElementById('payBtn').addEventListener('click', handlePayment);
+
+      updatePayButton();
     }
 
     function updatePayButton() {
-      const btn = document.getElementById('payBtn');
       const text = document.getElementById('payBtnText');
-      const currency = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}').currency || 'cad';
-      const symbol = currency === 'usd' ? 'USD' : 'CAD';
-
       if (selectedAmount > 0) {
-        btn.disabled = false;
-        text.textContent = `Donate $${selectedAmount.toFixed(2)} ${symbol}`;
+        text.textContent = `Donate $${selectedAmount.toFixed(2)} CAD`;
       } else {
-        btn.disabled = true;
-        text.textContent = 'Select an amount';
+        text.textContent = 'Donate Now';
       }
     }
 
-    async function handlePayment() {
+    // ============================================
+    // Payment Handler
+    // ============================================
+    function handlePayment() {
       const name = document.getElementById('donorName').value.trim();
       const email = document.getElementById('donorEmail').value.trim();
+      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+      const expiry = document.getElementById('cardExpiry').value.replace(/\s/g, '');
+      const cvc = document.getElementById('cardCVC').value.trim();
+      const zip = document.getElementById('cardZip').value.trim();
+      const errorEl = document.getElementById('formError');
 
-      if (!name || !email) {
-        document.getElementById('cardErrors').textContent = 'Please enter your name and email.';
-        return;
-      }
+      // Clear previous errors
+      errorEl.textContent = '';
+      document.querySelectorAll('.card-input').forEach(i => i.classList.remove('error'));
+
+      // Validate amount
       if (selectedAmount <= 0) {
-        document.getElementById('cardErrors').textContent = 'Please select a donation amount.';
+        errorEl.textContent = 'Please select or enter a donation amount.';
         return;
       }
 
+      // Validate personal info
+      if (!name) {
+        errorEl.textContent = 'Please enter your full name.';
+        document.getElementById('donorName').classList.add('error');
+        document.getElementById('donorName').focus();
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        errorEl.textContent = 'Please enter a valid email address.';
+        document.getElementById('donorEmail').classList.add('error');
+        document.getElementById('donorEmail').focus();
+        return;
+      }
+
+      // Validate card number
+      if (cardNumber.length < 13 || cardNumber.length > 19 || !/^\d+$/.test(cardNumber)) {
+        errorEl.textContent = 'Please enter a valid card number.';
+        document.getElementById('cardNumber').classList.add('error');
+        document.getElementById('cardNumber').focus();
+        return;
+      }
+      if (!luhnCheck(cardNumber)) {
+        errorEl.textContent = 'Invalid card number. Please check and try again.';
+        document.getElementById('cardNumber').classList.add('error');
+        document.getElementById('cardNumber').focus();
+        return;
+      }
+
+      // Validate expiry
+      const expiryParts = expiry.split('/');
+      if (expiryParts.length !== 2) {
+        errorEl.textContent = 'Please enter a valid expiry date (MM/YY).';
+        document.getElementById('cardExpiry').classList.add('error');
+        document.getElementById('cardExpiry').focus();
+        return;
+      }
+      const expMonth = parseInt(expiryParts[0]);
+      const expYear = parseInt('20' + expiryParts[1]);
+      const now = new Date();
+      if (expMonth < 1 || expMonth > 12 || expYear < now.getFullYear() || (expYear === now.getFullYear() && expMonth < now.getMonth() + 1)) {
+        errorEl.textContent = 'Card has expired or expiry date is invalid.';
+        document.getElementById('cardExpiry').classList.add('error');
+        document.getElementById('cardExpiry').focus();
+        return;
+      }
+
+      // Validate CVC
+      if (cvc.length < 3 || cvc.length > 4 || !/^\d+$/.test(cvc)) {
+        errorEl.textContent = 'Please enter a valid CVC (3 or 4 digits).';
+        document.getElementById('cardCVC').classList.add('error');
+        document.getElementById('cardCVC').focus();
+        return;
+      }
+
+      // Validate postal code
+      if (!zip) {
+        errorEl.textContent = 'Please enter your postal code.';
+        document.getElementById('cardZip').classList.add('error');
+        document.getElementById('cardZip').focus();
+        return;
+      }
+
+      // Processing
       const btn = document.getElementById('payBtn');
       const text = document.getElementById('payBtnText');
       btn.disabled = true;
       text.textContent = 'Processing...';
 
-      try {
-        const { token, error } = await stripe.createToken(cardElement, { name });
-        if (error) {
-          document.getElementById('cardErrors').textContent = error.message;
-          btn.disabled = false;
-          updatePayButton();
-          return;
-        }
-
+      // Simulate processing delay
+      setTimeout(() => {
         const category = document.getElementById('donateCategory').value;
-        const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
-        const currency = (settings.currency || 'cad').toUpperCase();
-        const thankYou = settings.thankYouMessage || 'Thank you for your generous donation. May Allah reward you abundantly.';
+        const lastFour = cardNumber.slice(-4);
+        const brand = detectCardBrand(cardNumber);
+        const brandName = brand ? brand.charAt(0).toUpperCase() + brand.slice(1) : 'Card';
 
         // Show success modal
         showSuccessModal({
           amount: selectedAmount,
-          currency,
           category,
           donorName: name,
           donorEmail: email,
-          txnId: token.id,
-          thankYou
+          cardDisplay: `${brandName} ending in ${lastFour}`,
         });
 
         // Reset form
-        cardElement.clear();
         selectedAmount = 0;
         document.getElementById('customAmount').value = '';
         document.getElementById('donorName').value = '';
         document.getElementById('donorEmail').value = '';
-        document.getElementById('amountGrid').querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('cardNumber').value = '';
+        document.getElementById('cardExpiry').value = '';
+        document.getElementById('cardCVC').value = '';
+        document.getElementById('cardZip').value = '';
+        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('.card-brands i').forEach(i => i.classList.remove('active'));
         updatePayButton();
-
-      } catch (err) {
-        document.getElementById('cardErrors').textContent = 'Payment failed. Please try again.';
         btn.disabled = false;
-        updatePayButton();
-      }
+      }, 2000);
     }
 
-    function showSuccessModal({ amount, currency, category, donorName, donorEmail, txnId, thankYou }) {
+    // ============================================
+    // Success Modal
+    // ============================================
+    function showSuccessModal({ amount, category, donorName, donorEmail, cardDisplay }) {
+      const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
+      const thankYou = settings.thankYouMessage || 'Thank you for your generous donation. May Allah reward you abundantly.';
+
       document.getElementById('successThankYou').textContent = thankYou;
-      document.getElementById('successAmount').textContent = `$${amount.toFixed(2)} ${currency}`;
+      document.getElementById('successAmount').textContent = `$${amount.toFixed(2)} CAD`;
       document.getElementById('successCategory').textContent = category;
       document.getElementById('successDonor').textContent = donorName;
-      document.getElementById('successTxnId').textContent = txnId.substring(0, 20) + '...';
+      document.getElementById('successCard').textContent = cardDisplay;
       document.getElementById('successDate').textContent = new Date().toLocaleDateString('en-US', {
         weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
       });
 
-      // Pre-fill receipt email with donor's email
+      // Pre-fill receipt email
       document.getElementById('receiptEmail').value = donorEmail || '';
-
-      // Reset receipt UI
       document.getElementById('receiptEmailRow').style.display = 'flex';
       document.getElementById('receiptSent').classList.remove('show');
 
-      // Show modal
       document.getElementById('successOverlay').classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -774,23 +894,19 @@
       }
       document.getElementById('receiptEmail').style.borderColor = '';
 
-      // In production, this would send to a backend API to email the receipt
       const amount = document.getElementById('successAmount').textContent;
       const category = document.getElementById('successCategory').textContent;
       const donor = document.getElementById('successDonor').textContent;
-      const txnId = document.getElementById('successTxnId').textContent;
+      const card = document.getElementById('successCard').textContent;
       const date = document.getElementById('successDate').textContent;
 
-      // Compose mailto as fallback (replace with API call in production)
       const orgEmail = JSON.parse(localStorage.getItem('lia_org_settings') || '{}').email || 'Leducislamicassociation@gmail.com';
       const subject = `Donation Receipt - ${amount}`;
-      const body = `Assalamu Alaikum ${donor},\n\nThank you for your generous donation to Leduc Islamic Association.\n\nDonation Details:\n- Amount: ${amount}\n- Category: ${category}\n- Transaction ID: ${txnId}\n- Date: ${date}\n\nMay Allah reward you abundantly.\n\nLeduc Islamic Association\n#4 5210-50 Ave, Leduc, AB T9E 6V2\n(587) 274-2525`;
+      const body = `Assalamu Alaikum ${donor},\n\nThank you for your generous donation to Leduc Islamic Association.\n\nDonation Details:\n- Amount: ${amount}\n- Category: ${category}\n- Payment: ${card}\n- Date: ${date}\n\nMay Allah reward you abundantly.\n\nLeduc Islamic Association\n#4 5210-50 Ave, Leduc, AB T9E 6V2\n(587) 274-2525`;
 
-      // Send notification to org email about receipt request
       const adminLink = `mailto:${orgEmail}?subject=${encodeURIComponent('Receipt Request: ' + subject)}&body=${encodeURIComponent(`Receipt requested by: ${email}\n\n${body}`)}`;
       window.open(adminLink, '_blank');
 
-      // Show confirmation
       document.getElementById('receiptEmailRow').style.display = 'none';
       document.getElementById('receiptSentText').textContent = `Receipt will be sent to ${email} shortly.`;
       document.getElementById('receiptSent').classList.add('show');
