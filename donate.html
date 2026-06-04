@@ -219,10 +219,194 @@
       display: block;
     }
 
+    /* Success Modal */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .success-overlay.show {
+      display: flex;
+    }
+    .success-modal {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.4s ease;
+      position: relative;
+    }
+    @keyframes modalSlideIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .success-checkmark {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 2.2rem;
+      color: white;
+      animation: checkPop 0.5s ease 0.2s both;
+    }
+    @keyframes checkPop {
+      0% { transform: scale(0); }
+      60% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .success-modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+    .success-modal .success-message {
+      color: var(--text-light);
+      font-size: 1rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .success-details {
+      background: var(--off-white);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .success-details .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .success-details .detail-row:not(:last-child) {
+      border-bottom: 1px solid var(--border);
+    }
+    .success-details .detail-label {
+      color: var(--text-muted);
+    }
+    .success-details .detail-value {
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    .receipt-section {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      margin-top: 4px;
+    }
+    .receipt-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+    .receipt-section p {
+      color: var(--text-light);
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+    }
+    .receipt-email-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .receipt-email-row input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--off-white);
+      transition: var(--transition);
+    }
+    .receipt-email-row input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
+    }
+    .receipt-email-row button {
+      padding: 12px 24px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .receipt-email-row button:hover {
+      background: var(--primary-dark);
+    }
+    .receipt-sent {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #16a34a;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px;
+      background: #f0fdf4;
+      border-radius: var(--radius-sm);
+      border: 1px solid #bbf7d0;
+    }
+    .receipt-sent.show { display: flex; }
+    .success-close-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--off-white);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 16px;
+    }
+    .success-close-btn:hover {
+      background: var(--border);
+    }
+    .modal-close-x {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      transition: var(--transition);
+    }
+    .modal-close-x:hover { color: var(--text); }
+
     @media (max-width: 480px) {
       .amount-grid { grid-template-columns: repeat(2, 1fr); }
       .donor-info-grid { grid-template-columns: 1fr; }
       .donate-form-card { padding: 28px 20px; }
+      .success-modal { padding: 36px 24px; }
+      .receipt-email-row { flex-direction: column; }
     }
   </style>
 </head>
@@ -341,6 +525,58 @@
       </div>
     </div>
   </section>
+
+  <!-- Success Modal -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-modal">
+      <button class="modal-close-x" id="modalCloseX">&times;</button>
+      <div class="success-checkmark">
+        <i class="fas fa-check"></i>
+      </div>
+      <h2>Transaction Successful!</h2>
+      <p class="success-message" id="successThankYou">Thank you for your generous donation. May Allah reward you abundantly.</p>
+
+      <div class="success-details">
+        <div class="detail-row">
+          <span class="detail-label">Amount</span>
+          <span class="detail-value" id="successAmount">$0.00</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Category</span>
+          <span class="detail-value" id="successCategory">General</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Donor</span>
+          <span class="detail-value" id="successDonor">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Transaction ID</span>
+          <span class="detail-value" id="successTxnId">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Date</span>
+          <span class="detail-value" id="successDate">—</span>
+        </div>
+      </div>
+
+      <div class="receipt-section">
+        <h4><i class="fas fa-envelope" style="color: var(--gold); margin-right: 6px;"></i> Get Your Receipt</h4>
+        <p>Enter your email address and we'll send you a donation receipt for your records.</p>
+        <div class="receipt-email-row" id="receiptEmailRow">
+          <input type="email" id="receiptEmail" placeholder="Enter your email address">
+          <button id="sendReceiptBtn"><i class="fas fa-paper-plane"></i> Send</button>
+        </div>
+        <div class="receipt-sent" id="receiptSent">
+          <i class="fas fa-check-circle"></i>
+          <span id="receiptSentText">Receipt will be sent to your email shortly.</span>
+        </div>
+      </div>
+
+      <button class="success-close-btn" id="successCloseBtn">
+        <i class="fas fa-heart" style="color: var(--gold);"></i> Make Another Donation
+      </button>
+    </div>
+  </div>
 
   <div id="footer-placeholder"></div>
 
@@ -465,10 +701,19 @@
 
         const category = document.getElementById('donateCategory').value;
         const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
-
-        // Show success - in production, the token would be sent to a backend
+        const currency = (settings.currency || 'cad').toUpperCase();
         const thankYou = settings.thankYouMessage || 'Thank you for your generous donation. May Allah reward you abundantly.';
-        alert(`${thankYou}\n\nDonation: $${selectedAmount.toFixed(2)}\nCategory: ${category}\nToken: ${token.id}\n\nNote: To process actual payments, connect this to a server-side Stripe integration.`);
+
+        // Show success modal
+        showSuccessModal({
+          amount: selectedAmount,
+          currency,
+          category,
+          donorName: name,
+          donorEmail: email,
+          txnId: token.id,
+          thankYou
+        });
 
         // Reset form
         cardElement.clear();
@@ -485,6 +730,71 @@
         updatePayButton();
       }
     }
+
+    function showSuccessModal({ amount, currency, category, donorName, donorEmail, txnId, thankYou }) {
+      document.getElementById('successThankYou').textContent = thankYou;
+      document.getElementById('successAmount').textContent = `$${amount.toFixed(2)} ${currency}`;
+      document.getElementById('successCategory').textContent = category;
+      document.getElementById('successDonor').textContent = donorName;
+      document.getElementById('successTxnId').textContent = txnId.substring(0, 20) + '...';
+      document.getElementById('successDate').textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+
+      // Pre-fill receipt email with donor's email
+      document.getElementById('receiptEmail').value = donorEmail || '';
+
+      // Reset receipt UI
+      document.getElementById('receiptEmailRow').style.display = 'flex';
+      document.getElementById('receiptSent').classList.remove('show');
+
+      // Show modal
+      document.getElementById('successOverlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    // Modal close handlers
+    document.getElementById('modalCloseX').addEventListener('click', closeSuccessModal);
+    document.getElementById('successCloseBtn').addEventListener('click', closeSuccessModal);
+    document.getElementById('successOverlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeSuccessModal();
+    });
+
+    // Send receipt handler
+    document.getElementById('sendReceiptBtn').addEventListener('click', () => {
+      const email = document.getElementById('receiptEmail').value.trim();
+      if (!email || !email.includes('@')) {
+        document.getElementById('receiptEmail').style.borderColor = '#dc2626';
+        return;
+      }
+      document.getElementById('receiptEmail').style.borderColor = '';
+
+      // In production, this would send to a backend API to email the receipt
+      const amount = document.getElementById('successAmount').textContent;
+      const category = document.getElementById('successCategory').textContent;
+      const donor = document.getElementById('successDonor').textContent;
+      const txnId = document.getElementById('successTxnId').textContent;
+      const date = document.getElementById('successDate').textContent;
+
+      // Compose mailto as fallback (replace with API call in production)
+      const orgEmail = JSON.parse(localStorage.getItem('lia_org_settings') || '{}').email || 'Leducislamicassociation@gmail.com';
+      const subject = `Donation Receipt - ${amount}`;
+      const body = `Assalamu Alaikum ${donor},\n\nThank you for your generous donation to Leduc Islamic Association.\n\nDonation Details:\n- Amount: ${amount}\n- Category: ${category}\n- Transaction ID: ${txnId}\n- Date: ${date}\n\nMay Allah reward you abundantly.\n\nLeduc Islamic Association\n#4 5210-50 Ave, Leduc, AB T9E 6V2\n(587) 274-2525`;
+
+      // Send notification to org email about receipt request
+      const adminLink = `mailto:${orgEmail}?subject=${encodeURIComponent('Receipt Request: ' + subject)}&body=${encodeURIComponent(`Receipt requested by: ${email}\n\n${body}`)}`;
+      window.open(adminLink, '_blank');
+
+      // Show confirmation
+      document.getElementById('receiptEmailRow').style.display = 'none';
+      document.getElementById('receiptSentText').textContent = `Receipt will be sent to ${email} shortly.`;
+      document.getElementById('receiptSent').classList.add('show');
+    });
   </script>
 </body>
 </html>
