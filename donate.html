@@ -454,48 +454,44 @@
   <script src="components.js"></script>
   <script src="script.js"></script>
   <script src="https://js.stripe.com/v3/"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      loadComponents('Donate');
-      initScrollAnimations();
-      initDonatePage();
-    });
+  <script type="module">
+    import { loadPaymentSettings, loadOrgSettings, isFirebaseConfigured } from './firebase-config.js';
+
+    loadComponents('Donate');
+    initScrollAnimations();
 
     let selectedAmount = 0;
     let stripe = null;
+    let cachedSettings = {};
 
-    function initDonatePage() {
-      // Check if returning from Stripe Checkout
+    async function initDonatePage() {
       const params = new URLSearchParams(window.location.search);
       if (params.get('payment') === 'success') {
         document.getElementById('successPage').classList.add('show');
         document.getElementById('donateFormCard').style.display = 'none';
         document.getElementById('setupNeeded').style.display = 'none';
-        // Clean URL
         window.history.replaceState({}, '', 'donate.html');
         return;
       }
 
-      const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
+      let settings = {};
+      if (isFirebaseConfigured()) {
+        try { settings = (await loadPaymentSettings()) || {}; } catch { settings = {}; }
+      }
+      cachedSettings = settings;
 
-      // Check if Stripe is configured
       if (settings.enabled && settings.stripeKey && settings.stripeKey.startsWith('pk_')) {
         stripe = Stripe(settings.stripeKey);
         document.getElementById('donateFormCard').style.display = 'block';
         document.getElementById('setupNeeded').style.display = 'none';
 
-        // Load custom amounts
-        if (settings.amounts && settings.amounts.length > 0) {
-          const grid = document.getElementById('amountGrid');
-          grid.innerHTML = settings.amounts.map(amt =>
+        if (settings.amounts?.length > 0) {
+          document.getElementById('amountGrid').innerHTML = settings.amounts.map(amt =>
             `<button class="amount-btn" data-amount="${amt}">$${amt}</button>`
           ).join('');
         }
-
-        // Load custom categories
-        if (settings.categories && settings.categories.length > 0) {
-          const select = document.getElementById('donateCategory');
-          select.innerHTML = settings.categories.filter(c => c).map(c =>
+        if (settings.categories?.length > 0) {
+          document.getElementById('donateCategory').innerHTML = settings.categories.filter(c => c).map(c =>
             `<option value="${c}">${c}</option>`
           ).join('');
         }
@@ -505,7 +501,6 @@
         return;
       }
 
-      // Amount buttons
       document.getElementById('amountGrid').addEventListener('click', (e) => {
         const btn = e.target.closest('.amount-btn');
         if (!btn) return;
@@ -522,76 +517,44 @@
         updatePayButton();
       });
 
-      // Pay button
       document.getElementById('payBtn').addEventListener('click', handleCheckout);
     }
 
     function updatePayButton() {
       const text = document.getElementById('payBtnText');
-      if (selectedAmount > 0) {
-        text.textContent = `Donate $${selectedAmount.toFixed(2)} — Proceed to Payment`;
-      } else {
-        text.textContent = 'Proceed to Secure Payment';
-      }
+      text.textContent = selectedAmount > 0
+        ? `Donate $${selectedAmount.toFixed(2)} — Proceed to Payment`
+        : 'Proceed to Secure Payment';
     }
 
     async function handleCheckout() {
       const errorEl = document.getElementById('formError');
       errorEl.textContent = '';
-
-      if (selectedAmount <= 0) {
-        errorEl.textContent = 'Please select or enter a donation amount.';
-        return;
-      }
-      if (selectedAmount < 1) {
-        errorEl.textContent = 'Minimum donation amount is $1.00.';
-        return;
-      }
+      if (selectedAmount <= 0) { errorEl.textContent = 'Please select or enter a donation amount.'; return; }
+      if (selectedAmount < 1) { errorEl.textContent = 'Minimum donation amount is $1.00.'; return; }
 
       const category = document.getElementById('donateCategory').value;
-      const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
-      const currency = settings.currency || 'cad';
-
+      const currency = cachedSettings.currency || 'cad';
       const btn = document.getElementById('payBtn');
       const text = document.getElementById('payBtnText');
       btn.disabled = true;
       text.textContent = 'Redirecting to payment...';
 
       try {
-        // Redirect to Stripe Checkout
         const result = await stripe.redirectToCheckout({
-          lineItems: [{
-            price_data: {
-              currency: currency,
-              product_data: {
-                name: `${category} — Leduc Islamic Association`,
-                description: `Donation to Leduc Islamic Association - ${category}`,
-              },
-              unit_amount: Math.round(selectedAmount * 100),
-            },
-            quantity: 1,
-          }],
+          lineItems: [{ price_data: { currency, product_data: { name: `${category} — Leduc Islamic Association`, description: `Donation - ${category}` }, unit_amount: Math.round(selectedAmount * 100) }, quantity: 1 }],
           mode: 'payment',
           successUrl: window.location.origin + window.location.pathname + '?payment=success',
           cancelUrl: window.location.origin + window.location.pathname + '?payment=cancelled',
         });
-
-        if (result.error) {
-          errorEl.textContent = result.error.message;
-          btn.disabled = false;
-          updatePayButton();
-        }
-      } catch (err) {
-        // Stripe Checkout requires a server-side session for lineItems with price_data.
-        // Use Stripe Payment Links as fallback or a simple checkout session.
-        // For now, try the simpler approach with a pre-created product.
-        errorEl.textContent = 'Redirecting to Stripe requires a backend session. Please use the admin dashboard to set up Stripe Payment Links for each category, or contact the admin.';
+        if (result.error) { errorEl.textContent = result.error.message; btn.disabled = false; updatePayButton(); }
+      } catch {
+        errorEl.textContent = 'Stripe Checkout requires a backend session. Contact the admin to complete Stripe setup.';
         btn.disabled = false;
         updatePayButton();
       }
     }
 
-    // Success page handlers
     document.getElementById('successCloseBtn')?.addEventListener('click', () => {
       document.getElementById('successPage').classList.remove('show');
       document.getElementById('donateFormCard').style.display = 'block';
@@ -599,24 +562,24 @@
       updatePayButton();
     });
 
-    document.getElementById('sendReceiptBtn')?.addEventListener('click', () => {
+    document.getElementById('sendReceiptBtn')?.addEventListener('click', async () => {
       const email = document.getElementById('receiptEmail').value.trim();
-      if (!email || !email.includes('@')) {
-        document.getElementById('receiptEmail').style.borderColor = '#dc2626';
-        return;
-      }
+      if (!email || !email.includes('@')) { document.getElementById('receiptEmail').style.borderColor = '#dc2626'; return; }
       document.getElementById('receiptEmail').style.borderColor = '';
 
-      const orgEmail = JSON.parse(localStorage.getItem('lia_org_settings') || '{}').email || 'Leducislamicassociation@gmail.com';
+      let orgEmail = 'Leducislamicassociation@gmail.com';
+      try { const org = await loadOrgSettings(); if (org?.email) orgEmail = org.email; } catch {}
+
       const subject = 'Donation Receipt Request';
       const body = `Assalamu Alaikum,\n\nA donor has requested a receipt.\n\nDonor Email: ${email}\nDate: ${new Date().toLocaleString()}\n\nPlease send them a donation receipt.\n\nLeduc Islamic Association`;
-
       window.open(`mailto:${orgEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
 
       document.getElementById('receiptEmailRow').style.display = 'none';
       document.getElementById('receiptSentText').textContent = `Receipt will be sent to ${email} shortly.`;
       document.getElementById('receiptSent').classList.add('show');
     });
+
+    initDonatePage();
   </script>
 </body>
 </html>

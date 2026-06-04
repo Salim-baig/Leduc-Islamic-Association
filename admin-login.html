@@ -103,36 +103,13 @@
       display: none;
     }
     .login-error.show { display: block; }
-    .login-card .btn {
-      width: 100%;
-      margin-top: 8px;
-    }
+    .login-card .btn { width: 100%; margin-top: 8px; }
     .login-back {
       margin-top: 24px;
       font-size: 0.9rem;
     }
-    .login-back a {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-    .setup-section {
-      display: none;
-      text-align: left;
-    }
-    .setup-section.show { display: block; }
-    .setup-note {
-      background: #fefce8;
-      border: 1px solid #fde68a;
-      color: #92400e;
-      padding: 12px 16px;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-    .password-toggle {
-      position: relative;
-    }
+    .login-back a { color: var(--primary); text-decoration: underline; }
+    .password-toggle { position: relative; }
     .password-toggle i {
       position: absolute;
       right: 14px;
@@ -141,6 +118,43 @@
       cursor: pointer;
       color: var(--text-muted);
     }
+    .tab-switch {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .tab-switch button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: var(--off-white);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .tab-switch button.active {
+      background: var(--primary);
+      color: white;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .loading-spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -153,44 +167,56 @@
       <h1>Admin Login</h1>
       <p class="subtitle">Leduc Islamic Association</p>
 
-      <!-- First-time Setup -->
-      <div class="setup-section" id="setupSection">
-        <div class="setup-note">
-          <i class="fas fa-info-circle"></i> <strong>First-time Setup:</strong> Create your admin password. Keep it safe — you'll need it to access the admin dashboard.
-        </div>
-        <form id="setupForm">
+      <div class="tab-switch">
+        <button class="active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+        <button id="tabSignup" onclick="switchTab('signup')">Create Account</button>
+      </div>
+
+      <!-- Login Form -->
+      <div class="tab-content active" id="loginContent">
+        <form id="loginForm">
           <div class="form-group">
-            <label>Create Password</label>
+            <label>Email</label>
+            <input type="email" id="loginEmail" placeholder="admin@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
             <div class="password-toggle">
-              <input type="password" id="setupPassword" placeholder="Enter a strong password" required minlength="6">
-              <i class="fas fa-eye" onclick="togglePassword('setupPassword', this)"></i>
+              <input type="password" id="loginPassword" placeholder="Enter your password" required>
+              <i class="fas fa-eye" onclick="togglePassword('loginPassword', this)"></i>
+            </div>
+          </div>
+          <div class="login-error" id="loginError"></div>
+          <button type="submit" class="btn btn-primary" id="loginBtn">
+            <i class="fas fa-lock"></i> Sign In
+          </button>
+        </form>
+      </div>
+
+      <!-- Signup Form -->
+      <div class="tab-content" id="signupContent">
+        <form id="signupForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="signupEmail" placeholder="admin@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="password-toggle">
+              <input type="password" id="signupPassword" placeholder="Min. 6 characters" required minlength="6">
+              <i class="fas fa-eye" onclick="togglePassword('signupPassword', this)"></i>
             </div>
           </div>
           <div class="form-group">
             <label>Confirm Password</label>
             <div class="password-toggle">
-              <input type="password" id="setupPasswordConfirm" placeholder="Confirm your password" required minlength="6">
-              <i class="fas fa-eye" onclick="togglePassword('setupPasswordConfirm', this)"></i>
+              <input type="password" id="signupPasswordConfirm" placeholder="Confirm password" required minlength="6">
+              <i class="fas fa-eye" onclick="togglePassword('signupPasswordConfirm', this)"></i>
             </div>
           </div>
-          <div class="login-error" id="setupError"></div>
-          <button type="submit" class="btn btn-primary">Create Admin Account</button>
-        </form>
-      </div>
-
-      <!-- Login Form -->
-      <div id="loginSection">
-        <form id="loginForm">
-          <div class="form-group">
-            <label>Password</label>
-            <div class="password-toggle">
-              <input type="password" id="loginPassword" placeholder="Enter admin password" required>
-              <i class="fas fa-eye" onclick="togglePassword('loginPassword', this)"></i>
-            </div>
-          </div>
-          <div class="login-error" id="loginError"></div>
-          <button type="submit" class="btn btn-primary">
-            <i class="fas fa-lock"></i> Sign In
+          <div class="login-error" id="signupError"></div>
+          <button type="submit" class="btn btn-primary" id="signupBtn">
+            <i class="fas fa-user-plus"></i> Create Admin Account
           </button>
         </form>
       </div>
@@ -201,17 +227,42 @@
     </div>
   </div>
 
-  <script>
-    // Simple hash function for client-side password storage
-    async function hashPassword(password) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(password + 'LIA_SALT_2024');
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  <script type="module">
+    import { firebaseLogin, firebaseSignup, onAuthChange, isFirebaseConfigured }
+      from './firebase-config.js';
+
+    // Check Firebase configuration
+    if (!isFirebaseConfigured()) {
+      document.querySelector('.login-card').innerHTML = `
+        <div class="login-logo"><i class="fas fa-exclamation-triangle"></i></div>
+        <h1>Setup Required</h1>
+        <p class="subtitle">Firebase is not configured yet.</p>
+        <p style="color: var(--text-light); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px;">
+          Open <code style="background: var(--off-white); padding: 2px 6px; border-radius: 4px;">firebase-config.js</code>
+          and replace the placeholder values with your Firebase project configuration.
+        </p>
+        <a href="index.html" class="btn btn-primary">Back to Website</a>
+      `;
+      throw new Error('Firebase not configured');
     }
 
-    function togglePassword(inputId, icon) {
+    // Redirect if already logged in
+    onAuthChange((user) => {
+      if (user) {
+        window.location.href = 'admin-dashboard.html';
+      }
+    });
+
+    // Tab switching
+    window.switchTab = function(tab) {
+      document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+      document.getElementById('loginContent').classList.toggle('active', tab === 'login');
+      document.getElementById('signupContent').classList.toggle('active', tab === 'signup');
+    };
+
+    // Password toggle
+    window.togglePassword = function(inputId, icon) {
       const input = document.getElementById(inputId);
       if (input.type === 'password') {
         input.type = 'text';
@@ -220,59 +271,71 @@
         input.type = 'password';
         icon.classList.replace('fa-eye-slash', 'fa-eye');
       }
-    }
+    };
 
-    // Check if admin is already set up
-    const isSetup = localStorage.getItem('lia_admin_hash');
-    if (!isSetup) {
-      document.getElementById('setupSection').classList.add('show');
-      document.getElementById('loginSection').style.display = 'none';
-    }
-
-    // Check if already logged in
-    if (sessionStorage.getItem('lia_admin_auth') === 'true') {
-      window.location.href = 'admin-dashboard.html';
-    }
-
-    // Setup form
-    document.getElementById('setupForm')?.addEventListener('submit', async (e) => {
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const password = document.getElementById('setupPassword').value;
-      const confirm = document.getElementById('setupPasswordConfirm').value;
-      const errorEl = document.getElementById('setupError');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const errorEl = document.getElementById('loginError');
+      const btn = document.getElementById('loginBtn');
+
+      errorEl.classList.remove('show');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span> Signing in...';
+
+      try {
+        await firebaseLogin(email, password);
+        // onAuthChange will redirect
+      } catch (err) {
+        const messages = {
+          'auth/user-not-found': 'No account found with this email.',
+          'auth/wrong-password': 'Incorrect password.',
+          'auth/invalid-email': 'Please enter a valid email address.',
+          'auth/too-many-requests': 'Too many attempts. Please try again later.',
+          'auth/invalid-credential': 'Invalid email or password.',
+        };
+        errorEl.textContent = messages[err.code] || `Login failed: ${err.message}`;
+        errorEl.classList.add('show');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-lock"></i> Sign In';
+      }
+    });
+
+    // Signup
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirm = document.getElementById('signupPasswordConfirm').value;
+      const errorEl = document.getElementById('signupError');
+      const btn = document.getElementById('signupBtn');
+
+      errorEl.classList.remove('show');
 
       if (password !== confirm) {
         errorEl.textContent = 'Passwords do not match.';
         errorEl.classList.add('show');
         return;
       }
-      if (password.length < 6) {
-        errorEl.textContent = 'Password must be at least 6 characters.';
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-spinner"></span> Creating account...';
+
+      try {
+        await firebaseSignup(email, password);
+        // onAuthChange will redirect
+      } catch (err) {
+        const messages = {
+          'auth/email-already-in-use': 'An account with this email already exists. Try signing in.',
+          'auth/weak-password': 'Password must be at least 6 characters.',
+          'auth/invalid-email': 'Please enter a valid email address.',
+        };
+        errorEl.textContent = messages[err.code] || `Signup failed: ${err.message}`;
         errorEl.classList.add('show');
-        return;
-      }
-
-      const hash = await hashPassword(password);
-      localStorage.setItem('lia_admin_hash', hash);
-      sessionStorage.setItem('lia_admin_auth', 'true');
-      window.location.href = 'admin-dashboard.html';
-    });
-
-    // Login form
-    document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const password = document.getElementById('loginPassword').value;
-      const errorEl = document.getElementById('loginError');
-      const storedHash = localStorage.getItem('lia_admin_hash');
-
-      const hash = await hashPassword(password);
-      if (hash === storedHash) {
-        sessionStorage.setItem('lia_admin_auth', 'true');
-        window.location.href = 'admin-dashboard.html';
-      } else {
-        errorEl.textContent = 'Incorrect password. Please try again.';
-        errorEl.classList.add('show');
-        document.getElementById('loginPassword').value = '';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Admin Account';
       }
     });
   </script>

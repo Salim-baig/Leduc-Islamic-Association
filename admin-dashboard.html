@@ -530,68 +530,87 @@
     </div>
   </div>
 
-  <script>
-    // Auth check
-    if (sessionStorage.getItem('lia_admin_auth') !== 'true') {
-      window.location.href = 'admin-login.html';
+  <script type="module">
+    import {
+      onAuthChange, firebaseLogout, getCurrentUser,
+      savePaymentSettings, loadPaymentSettings,
+      saveOrgSettings, loadOrgSettings,
+      saveJumahSettings, loadJumahSettings,
+      isFirebaseConfigured
+    } from './firebase-config.js';
+
+    import { updatePassword, EmailAuthProvider, reauthenticateWithCredential }
+      from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+    // Auth check — redirect if not logged in
+    onAuthChange((user) => {
+      if (!user) {
+        window.location.href = 'admin-login.html';
+      } else {
+        initDashboard();
+      }
+    });
+
+    // ============================================
+    // Load Settings from Firestore
+    // ============================================
+    async function initDashboard() {
+      try {
+        const [paymentData, orgData, jumahData] = await Promise.all([
+          loadPaymentSettings(),
+          loadOrgSettings(),
+          loadJumahSettings(),
+        ]);
+
+        // Payment settings
+        const s = paymentData || {};
+        document.getElementById('paymentsEnabled').checked = s.enabled || false;
+        document.getElementById('stripePublishableKey').value = s.stripeKey || '';
+        document.getElementById('stripeCurrency').value = s.currency || 'cad';
+        document.getElementById('thankYouMessage').value = s.thankYouMessage || '';
+        document.getElementById('cat1').value = s.categories?.[0] || 'General Donation';
+        document.getElementById('cat2').value = s.categories?.[1] || 'Education Fund';
+        document.getElementById('cat3').value = s.categories?.[2] || 'Building Fund';
+        document.getElementById('cat4').value = s.categories?.[3] || 'Ramadan Fund';
+        document.getElementById('cat5').value = s.categories?.[4] || 'Zakat';
+        document.getElementById('cat6').value = s.categories?.[5] || 'Sadaqah';
+        presetAmounts = s.amounts || [25, 50, 100, 250, 500];
+        renderAmounts();
+        updateStripeStatus();
+
+        // Org settings
+        const o = orgData || {};
+        document.getElementById('orgName').value = o.name || 'Leduc Islamic Association';
+        document.getElementById('orgPhone').value = o.phone || '(587) 274-2525';
+        document.getElementById('orgEmail').value = o.email || 'Leducislamicassociation@gmail.com';
+        document.getElementById('orgAddress').value = o.address || '#4 5210-50 Ave, Leduc, AB T9E 6V2';
+
+        // Jumu'ah settings
+        const j = jumahData || {};
+        document.getElementById('jumahTime').value = j.prayerTime || '1:30 PM';
+        document.getElementById('khutbahTime').value = j.khutbahTime || '';
+
+      } catch (err) {
+        console.error('Error loading settings:', err);
+      }
     }
 
-    // Hash function
-    async function hashPassword(password) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(password + 'LIA_SALT_2024');
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    // Load saved settings
-    function loadSettings() {
-      const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
-      const orgSettings = JSON.parse(localStorage.getItem('lia_org_settings') || '{}');
-
-      // Payment settings
-      document.getElementById('paymentsEnabled').checked = settings.enabled || false;
-      document.getElementById('stripePublishableKey').value = settings.stripeKey || '';
-      document.getElementById('stripeCurrency').value = settings.currency || 'cad';
-      document.getElementById('thankYouMessage').value = settings.thankYouMessage || '';
-      document.getElementById('cat1').value = settings.categories?.[0] || 'General Donation';
-      document.getElementById('cat2').value = settings.categories?.[1] || 'Education Fund';
-      document.getElementById('cat3').value = settings.categories?.[2] || 'Building Fund';
-      document.getElementById('cat4').value = settings.categories?.[3] || 'Ramadan Fund';
-      document.getElementById('cat5').value = settings.categories?.[4] || 'Zakat';
-      document.getElementById('cat6').value = settings.categories?.[5] || 'Sadaqah';
-
-      presetAmounts = settings.amounts || [25, 50, 100, 250, 500];
-      renderAmounts();
-      updateStripeStatus();
-
-      // Org settings
-      document.getElementById('orgName').value = orgSettings.name || 'Leduc Islamic Association';
-      document.getElementById('orgPhone').value = orgSettings.phone || '(587) 274-2525';
-      document.getElementById('orgEmail').value = orgSettings.email || 'Leducislamicassociation@gmail.com';
-      document.getElementById('orgAddress').value = orgSettings.address || '#4 5210-50 Ave, Leduc, AB T9E 6V2';
-
-      // Jumu'ah settings
-      const jumahSettings = JSON.parse(localStorage.getItem('lia_jumah_settings') || '{}');
-      document.getElementById('jumahTime').value = jumahSettings.prayerTime || '1:30 PM';
-      document.getElementById('khutbahTime').value = jumahSettings.khutbahTime || '';
-    }
-
-    // Donation amounts
+    // ============================================
+    // Donation Amounts
+    // ============================================
     let presetAmounts = [25, 50, 100, 250, 500];
 
-    function renderAmounts() {
+    window.renderAmounts = function() {
       const list = document.getElementById('amountsList');
       list.innerHTML = presetAmounts.map((amt, i) =>
         `<div class="donation-amount-tag">$${amt} <span class="remove-amt" onclick="removeAmount(${i})"><i class="fas fa-times"></i></span></div>`
       ).join('');
-    }
+    };
 
-    function removeAmount(index) {
+    window.removeAmount = function(index) {
       presetAmounts.splice(index, 1);
       renderAmounts();
-    }
+    };
 
     document.getElementById('addAmountBtn').addEventListener('click', () => {
       const input = document.getElementById('newAmount');
@@ -604,12 +623,13 @@
       }
     });
 
-    // Stripe status
+    // ============================================
+    // Stripe Status
+    // ============================================
     function updateStripeStatus() {
       const key = document.getElementById('stripePublishableKey').value;
       const statusEl = document.getElementById('stripeStatus');
       const textEl = document.getElementById('stripeStatusText');
-
       if (key && key.startsWith('pk_')) {
         statusEl.className = 'stripe-status connected';
         textEl.textContent = key.startsWith('pk_test_') ? 'Connected (Test Mode)' : 'Connected (Live Mode)';
@@ -618,55 +638,60 @@
         textEl.textContent = key ? 'Invalid key format' : 'Not configured';
       }
     }
-
     document.getElementById('stripePublishableKey').addEventListener('input', updateStripeStatus);
 
-    // Save payment settings
-    document.getElementById('savePaymentBtn').addEventListener('click', () => {
-      const settings = {
-        enabled: document.getElementById('paymentsEnabled').checked,
-        stripeKey: document.getElementById('stripePublishableKey').value.trim(),
-        currency: document.getElementById('stripeCurrency').value,
-        amounts: presetAmounts,
-        categories: [
-          document.getElementById('cat1').value || 'General Donation',
-          document.getElementById('cat2').value || 'Education Fund',
-          document.getElementById('cat3').value || 'Building Fund',
-          document.getElementById('cat4').value || 'Ramadan Fund',
-          document.getElementById('cat5').value || 'Zakat',
-          document.getElementById('cat6').value || 'Sadaqah',
-        ],
-        thankYouMessage: document.getElementById('thankYouMessage').value,
-      };
-      localStorage.setItem('lia_payment_settings', JSON.stringify(settings));
-      showSuccess('Payment settings saved successfully!');
-    });
-
-    // Save Jumu'ah settings
-    document.getElementById('saveJumahBtn').addEventListener('click', () => {
-      const jumahTime = document.getElementById('jumahTime').value.trim();
-      if (!jumahTime) {
-        alert('Please enter the Jumu\'ah prayer time.');
-        return;
+    // ============================================
+    // Save Handlers (all save to Firestore)
+    // ============================================
+    document.getElementById('savePaymentBtn').addEventListener('click', async () => {
+      try {
+        await savePaymentSettings({
+          enabled: document.getElementById('paymentsEnabled').checked,
+          stripeKey: document.getElementById('stripePublishableKey').value.trim(),
+          currency: document.getElementById('stripeCurrency').value,
+          amounts: presetAmounts,
+          categories: [
+            document.getElementById('cat1').value || 'General Donation',
+            document.getElementById('cat2').value || 'Education Fund',
+            document.getElementById('cat3').value || 'Building Fund',
+            document.getElementById('cat4').value || 'Ramadan Fund',
+            document.getElementById('cat5').value || 'Zakat',
+            document.getElementById('cat6').value || 'Sadaqah',
+          ],
+          thankYouMessage: document.getElementById('thankYouMessage').value,
+        });
+        showSuccess('Payment settings saved to cloud!');
+      } catch (err) {
+        alert('Error saving: ' + err.message);
       }
-      const settings = {
-        prayerTime: jumahTime,
-        khutbahTime: document.getElementById('khutbahTime').value.trim(),
-      };
-      localStorage.setItem('lia_jumah_settings', JSON.stringify(settings));
-      showSuccess('Jumu\'ah prayer time updated successfully!');
     });
 
-    // Save org settings
-    document.getElementById('saveOrgBtn').addEventListener('click', () => {
-      const settings = {
-        name: document.getElementById('orgName').value,
-        phone: document.getElementById('orgPhone').value,
-        email: document.getElementById('orgEmail').value,
-        address: document.getElementById('orgAddress').value,
-      };
-      localStorage.setItem('lia_org_settings', JSON.stringify(settings));
-      showSuccess('Organization info saved successfully!');
+    document.getElementById('saveJumahBtn').addEventListener('click', async () => {
+      const jumahTime = document.getElementById('jumahTime').value.trim();
+      if (!jumahTime) { alert('Please enter the Jumu\'ah prayer time.'); return; }
+      try {
+        await saveJumahSettings({
+          prayerTime: jumahTime,
+          khutbahTime: document.getElementById('khutbahTime').value.trim(),
+        });
+        showSuccess('Jumu\'ah prayer time saved to cloud!');
+      } catch (err) {
+        alert('Error saving: ' + err.message);
+      }
+    });
+
+    document.getElementById('saveOrgBtn').addEventListener('click', async () => {
+      try {
+        await saveOrgSettings({
+          name: document.getElementById('orgName').value,
+          phone: document.getElementById('orgPhone').value,
+          email: document.getElementById('orgEmail').value,
+          address: document.getElementById('orgAddress').value,
+        });
+        showSuccess('Organization info saved to cloud!');
+      } catch (err) {
+        alert('Error saving: ' + err.message);
+      }
     });
 
     // Test payment
@@ -674,61 +699,63 @@
       window.open('donate.html', '_blank');
     });
 
-    // Change password
+    // ============================================
+    // Change Password (Firebase Auth)
+    // ============================================
     document.getElementById('changePasswordBtn').addEventListener('click', async () => {
-      const current = document.getElementById('currentPassword').value;
+      const currentPass = document.getElementById('currentPassword').value;
       const newPass = document.getElementById('newPassword').value;
-      const storedHash = localStorage.getItem('lia_admin_hash');
+      if (!currentPass || !newPass) { alert('Please fill in both password fields.'); return; }
+      if (newPass.length < 6) { alert('New password must be at least 6 characters.'); return; }
 
-      if (!current || !newPass) {
-        alert('Please fill in both password fields.');
-        return;
+      try {
+        const user = getCurrentUser();
+        const credential = EmailAuthProvider.credential(user.email, currentPass);
+        await reauthenticateWithCredential(user, credential);
+        await updatePassword(user, newPass);
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        showSuccess('Password changed successfully!');
+      } catch (err) {
+        if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+          alert('Current password is incorrect.');
+        } else {
+          alert('Error: ' + err.message);
+        }
       }
-      if (newPass.length < 6) {
-        alert('New password must be at least 6 characters.');
-        return;
-      }
-
-      const currentHash = await hashPassword(current);
-      if (currentHash !== storedHash) {
-        alert('Current password is incorrect.');
-        return;
-      }
-
-      const newHash = await hashPassword(newPass);
-      localStorage.setItem('lia_admin_hash', newHash);
-      document.getElementById('currentPassword').value = '';
-      document.getElementById('newPassword').value = '';
-      showSuccess('Password changed successfully!');
     });
 
-    // Reset all
-    document.getElementById('resetAllBtn').addEventListener('click', () => {
-      if (confirm('Are you sure you want to reset ALL settings? This will clear your Stripe configuration, password, and all saved data. This cannot be undone.')) {
-        localStorage.removeItem('lia_payment_settings');
-        localStorage.removeItem('lia_org_settings');
-        localStorage.removeItem('lia_admin_hash');
-        sessionStorage.removeItem('lia_admin_auth');
-        window.location.href = 'admin-login.html';
+    // Reset all settings
+    document.getElementById('resetAllBtn').addEventListener('click', async () => {
+      if (confirm('Are you sure you want to reset ALL settings in the cloud? This cannot be undone.')) {
+        try {
+          await Promise.all([
+            savePaymentSettings({}),
+            saveOrgSettings({}),
+            saveJumahSettings({}),
+          ]);
+          showSuccess('All settings have been reset.');
+          setTimeout(() => location.reload(), 1500);
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
       }
     });
 
     // Logout
-    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
       e.preventDefault();
-      sessionStorage.removeItem('lia_admin_auth');
+      await firebaseLogout();
       window.location.href = 'admin-login.html';
     });
 
     function showSuccess(message) {
-      const alert = document.getElementById('successAlert');
+      const alertEl = document.getElementById('successAlert');
       document.getElementById('successMessage').textContent = message;
-      alert.classList.add('show');
+      alertEl.classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => alert.classList.remove('show'), 4000);
+      setTimeout(() => alertEl.classList.remove('show'), 4000);
     }
-
-    loadSettings();
   </script>
 </body>
 </html>

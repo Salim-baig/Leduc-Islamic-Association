@@ -108,28 +108,35 @@ function initNavbar() {
   });
 }
 
-function getJumahTime() {
-  const settings = JSON.parse(localStorage.getItem('lia_jumah_settings') || '{}');
-  return settings.prayerTime || '1:30 PM';
-}
-
-function getKhutbahTime() {
-  const settings = JSON.parse(localStorage.getItem('lia_jumah_settings') || '{}');
-  return settings.khutbahTime || '';
-}
-
-function applyJumahTimes() {
-  const jumahTime = getJumahTime();
-  document.querySelectorAll('.jumah-dynamic-time').forEach(el => {
-    el.textContent = jumahTime;
-  });
-  const khutbahTime = getKhutbahTime();
-  document.querySelectorAll('.khutbah-dynamic-time').forEach(el => {
-    if (khutbahTime) {
-      el.textContent = khutbahTime;
-      el.closest('.khutbah-row')?.style.removeProperty('display');
+async function applyJumahTimes() {
+  try {
+    const { loadJumahSettings, isFirebaseConfigured } = await import('./firebase-config.js');
+    if (!isFirebaseConfigured()) return;
+    const data = await loadJumahSettings();
+    if (data && data.prayerTime) {
+      document.querySelectorAll('.jumah-dynamic-time').forEach(el => {
+        el.textContent = data.prayerTime;
+      });
+      if (data.khutbahTime) {
+        document.querySelectorAll('.khutbah-dynamic-time').forEach(el => {
+          el.textContent = data.khutbahTime;
+          el.closest('.khutbah-row')?.style.removeProperty('display');
+        });
+      }
     }
-  });
+  } catch {
+    // Firebase not configured — keep default times
+  }
+}
+
+async function loadPublicSiteSettings() {
+  try {
+    const { loadPublicSettings, isFirebaseConfigured } = await import('./firebase-config.js');
+    if (!isFirebaseConfigured()) return null;
+    return await loadPublicSettings();
+  } catch {
+    return null;
+  }
 }
 
 function initMobileMenu() {
