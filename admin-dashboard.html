@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Leduc Islamic Association</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .admin-wrapper {
+      min-height: 100vh;
+      background: var(--off-white);
+    }
+    .admin-topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-topbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-topbar-left i {
+      font-size: 1.4rem;
+      color: var(--gold);
+    }
+    .admin-topbar-left h2 {
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+    }
+    .admin-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .admin-topbar-right a {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+    .admin-topbar-right a:hover {
+      background: var(--off-white);
+      color: var(--primary);
+    }
+    .admin-topbar-right .logout-btn {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+    .admin-topbar-right .logout-btn:hover {
+      background: #fee2e2;
+    }
+    .admin-content {
+      padding: 40px 0;
+    }
+    .admin-section {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .admin-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-section h3 i {
+      color: var(--gold);
+    }
+    .admin-section .desc {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .admin-form-group {
+      margin-bottom: 20px;
+    }
+    .admin-form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .admin-form-group input,
+    .admin-form-group select,
+    .admin-form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      transition: var(--transition);
+      background: var(--off-white);
+    }
+    .admin-form-group input:focus,
+    .admin-form-group select:focus,
+    .admin-form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(26, 86, 50, 0.1);
+    }
+    .admin-form-group .hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .admin-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .admin-form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    .admin-alert {
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-alert.show { display: flex; }
+    .admin-alert.success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .admin-alert.warning {
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+    .admin-alert.info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+    .donation-amounts-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .donation-amount-tag {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .donation-amount-tag .remove-amt {
+      cursor: pointer;
+      color: #dc2626;
+      font-size: 0.75rem;
+    }
+    .stripe-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+    .stripe-status.connected {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .stripe-status.disconnected {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+    }
+    .stripe-status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .stripe-status.connected .dot { background: #22c55e; }
+    .stripe-status.disconnected .dot { background: #dc2626; }
+    .admin-btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn-save {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-save:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    .btn-test {
+      background: var(--off-white);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-test:hover {
+      background: var(--border);
+    }
+    .btn-danger {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-danger:hover {
+      background: #fee2e2;
+    }
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .toggle-switch input[type="checkbox"] {
+      width: 44px;
+      height: 24px;
+      appearance: none;
+      background: #d1d5db;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .toggle-switch input[type="checkbox"]::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: var(--transition);
+    }
+    .toggle-switch input[type="checkbox"]:checked {
+      background: var(--primary);
+    }
+    .toggle-switch input[type="checkbox"]:checked::after {
+      left: 23px;
+    }
+    .toggle-label {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .toggle-label span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .admin-form-row,
+      .admin-form-row-3 {
+        grid-template-columns: 1fr;
+      }
+      .admin-topbar .container {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .admin-section {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrapper">
+
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+      <div class="container">
+        <div class="admin-topbar-left">
+          <i class="fas fa-mosque"></i>
+          <h2>Admin Dashboard</h2>
+        </div>
+        <div class="admin-topbar-right">
+          <a href="index.html"><i class="fas fa-globe"></i> View Website</a>
+          <a href="#" class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="container">
+
+        <!-- Success Alert -->
+        <div class="admin-alert success" id="successAlert">
+          <i class="fas fa-check-circle"></i>
+          <span id="successMessage">Settings saved successfully!</span>
+        </div>
+
+        <!-- Stripe Configuration -->
+        <div class="admin-section">
+          <h3><i class="fas fa-credit-card"></i> Payment Configuration (Stripe)</h3>
+          <p class="desc">Configure Stripe to accept credit card donations on your website. You'll need a <a href="https://dashboard.stripe.com/register" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: underline;">Stripe account</a> to get started.</p>
+
+          <div id="stripeStatus" class="stripe-status disconnected">
+            <span class="dot"></span>
+            <span id="stripeStatusText">Not configured</span>
+          </div>
+
+          <div class="toggle-switch">
+            <input type="checkbox" id="paymentsEnabled">
+            <label class="toggle-label" for="paymentsEnabled">
+              Enable Online Donations
+              <span>Allow visitors to donate via credit card on the website</span>
+            </label>
+          </div>
+
+          <div class="admin-form-group">
+            <label>Stripe Publishable Key</label>
+            <input type="text" id="stripePublishableKey" placeholder="pk_live_xxxxxxxxxxxxxxxxxxxxxxxx">
+            <p class="hint">Find this in your <a href="https://dashboard.stripe.com/apikeys" target="_blank" rel="noopener">Stripe Dashboard</a> → Developers → API Keys. Use the <strong>Publishable key</strong> (starts with pk_live_ or pk_test_).</p>
+          </div>
+
+          <div class="admin-form-group">
+            <label>Currency</label>
+            <select id="stripeCurrency">
+              <option value="cad">CAD - Canadian Dollar</option>
+              <option value="usd">USD - US Dollar</option>
+            </select>
+          </div>
+
+          <h4 style="margin: 24px 0 16px; color: var(--primary-dark);">Donation Amounts</h4>
+          <p class="desc" style="margin-bottom: 16px;">Set preset donation amounts shown to visitors. They can also enter a custom amount.</p>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label>Add Preset Amount ($)</label>
+              <input type="number" id="newAmount" placeholder="e.g. 50" min="1">
+            </div>
+            <div class="admin-form-group" style="display: flex; align-items: flex-end;">
+              <button class="btn-test" type="button" id="addAmountBtn">
+                <i class="fas fa-plus"></i> Add Amount
+              </button>
+            </div>
+          </div>
+          <div class="donation-amounts-list" id="amountsList"></div>
+
+          <h4 style="margin: 24px 0 16px; color: var(--primary-dark);">Donation Categories</h4>
+          <div class="admin-form-row-3">
+            <div class="admin-form-group">
+              <label>Category 1</label>
+              <input type="text" id="cat1" placeholder="General Donation">
+            </div>
+            <div class="admin-form-group">
+              <label>Category 2</label>
+              <input type="text" id="cat2" placeholder="Education Fund">
+            </div>
+            <div class="admin-form-group">
+              <label>Category 3</label>
+              <input type="text" id="cat3" placeholder="Building Fund">
+            </div>
+          </div>
+          <div class="admin-form-row-3">
+            <div class="admin-form-group">
+              <label>Category 4</label>
+              <input type="text" id="cat4" placeholder="Ramadan Fund">
+            </div>
+            <div class="admin-form-group">
+              <label>Category 5</label>
+              <input type="text" id="cat5" placeholder="Zakat">
+            </div>
+            <div class="admin-form-group">
+              <label>Category 6</label>
+              <input type="text" id="cat6" placeholder="Sadaqah">
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label>Thank You Message</label>
+            <textarea id="thankYouMessage" rows="3" placeholder="Thank you for your generous donation. May Allah reward you abundantly."></textarea>
+          </div>
+
+          <div class="admin-btn-row">
+            <button class="btn-save" id="savePaymentBtn">
+              <i class="fas fa-save"></i> Save Payment Settings
+            </button>
+            <button class="btn-test" id="testPaymentBtn" type="button">
+              <i class="fas fa-flask"></i> Test Payment Page
+            </button>
+          </div>
+        </div>
+
+        <!-- Organization Settings -->
+        <div class="admin-section">
+          <h3><i class="fas fa-building"></i> Organization Info</h3>
+          <p class="desc">Update your organization's contact information displayed on the website.</p>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label>Organization Name</label>
+              <input type="text" id="orgName" placeholder="Leduc Islamic Association">
+            </div>
+            <div class="admin-form-group">
+              <label>Phone</label>
+              <input type="tel" id="orgPhone" placeholder="(587) 274-2525">
+            </div>
+          </div>
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label>Email</label>
+              <input type="email" id="orgEmail" placeholder="Leducislamicassociation@gmail.com">
+            </div>
+            <div class="admin-form-group">
+              <label>Address</label>
+              <input type="text" id="orgAddress" placeholder="#4 5210-50 Ave, Leduc, AB T9E 6V2">
+            </div>
+          </div>
+
+          <div class="admin-btn-row">
+            <button class="btn-save" id="saveOrgBtn">
+              <i class="fas fa-save"></i> Save Organization Info
+            </button>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="admin-section">
+          <h3><i class="fas fa-shield-halved"></i> Security</h3>
+          <p class="desc">Change your admin password or reset all settings.</p>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label>Current Password</label>
+              <input type="password" id="currentPassword" placeholder="Enter current password">
+            </div>
+            <div class="admin-form-group">
+              <label>New Password</label>
+              <input type="password" id="newPassword" placeholder="Enter new password" minlength="6">
+            </div>
+          </div>
+
+          <div class="admin-btn-row">
+            <button class="btn-save" id="changePasswordBtn">
+              <i class="fas fa-key"></i> Change Password
+            </button>
+            <button class="btn-danger" id="resetAllBtn">
+              <i class="fas fa-trash"></i> Reset All Settings
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Auth check
+    if (sessionStorage.getItem('lia_admin_auth') !== 'true') {
+      window.location.href = 'admin-login.html';
+    }
+
+    // Hash function
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password + 'LIA_SALT_2024');
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Load saved settings
+    function loadSettings() {
+      const settings = JSON.parse(localStorage.getItem('lia_payment_settings') || '{}');
+      const orgSettings = JSON.parse(localStorage.getItem('lia_org_settings') || '{}');
+
+      // Payment settings
+      document.getElementById('paymentsEnabled').checked = settings.enabled || false;
+      document.getElementById('stripePublishableKey').value = settings.stripeKey || '';
+      document.getElementById('stripeCurrency').value = settings.currency || 'cad';
+      document.getElementById('thankYouMessage').value = settings.thankYouMessage || '';
+      document.getElementById('cat1').value = settings.categories?.[0] || 'General Donation';
+      document.getElementById('cat2').value = settings.categories?.[1] || 'Education Fund';
+      document.getElementById('cat3').value = settings.categories?.[2] || 'Building Fund';
+      document.getElementById('cat4').value = settings.categories?.[3] || 'Ramadan Fund';
+      document.getElementById('cat5').value = settings.categories?.[4] || 'Zakat';
+      document.getElementById('cat6').value = settings.categories?.[5] || 'Sadaqah';
+
+      presetAmounts = settings.amounts || [25, 50, 100, 250, 500];
+      renderAmounts();
+      updateStripeStatus();
+
+      // Org settings
+      document.getElementById('orgName').value = orgSettings.name || 'Leduc Islamic Association';
+      document.getElementById('orgPhone').value = orgSettings.phone || '(587) 274-2525';
+      document.getElementById('orgEmail').value = orgSettings.email || 'Leducislamicassociation@gmail.com';
+      document.getElementById('orgAddress').value = orgSettings.address || '#4 5210-50 Ave, Leduc, AB T9E 6V2';
+    }
+
+    // Donation amounts
+    let presetAmounts = [25, 50, 100, 250, 500];
+
+    function renderAmounts() {
+      const list = document.getElementById('amountsList');
+      list.innerHTML = presetAmounts.map((amt, i) =>
+        `<div class="donation-amount-tag">$${amt} <span class="remove-amt" onclick="removeAmount(${i})"><i class="fas fa-times"></i></span></div>`
+      ).join('');
+    }
+
+    function removeAmount(index) {
+      presetAmounts.splice(index, 1);
+      renderAmounts();
+    }
+
+    document.getElementById('addAmountBtn').addEventListener('click', () => {
+      const input = document.getElementById('newAmount');
+      const val = parseInt(input.value);
+      if (val > 0 && !presetAmounts.includes(val)) {
+        presetAmounts.push(val);
+        presetAmounts.sort((a, b) => a - b);
+        renderAmounts();
+        input.value = '';
+      }
+    });
+
+    // Stripe status
+    function updateStripeStatus() {
+      const key = document.getElementById('stripePublishableKey').value;
+      const statusEl = document.getElementById('stripeStatus');
+      const textEl = document.getElementById('stripeStatusText');
+
+      if (key && key.startsWith('pk_')) {
+        statusEl.className = 'stripe-status connected';
+        textEl.textContent = key.startsWith('pk_test_') ? 'Connected (Test Mode)' : 'Connected (Live Mode)';
+      } else {
+        statusEl.className = 'stripe-status disconnected';
+        textEl.textContent = key ? 'Invalid key format' : 'Not configured';
+      }
+    }
+
+    document.getElementById('stripePublishableKey').addEventListener('input', updateStripeStatus);
+
+    // Save payment settings
+    document.getElementById('savePaymentBtn').addEventListener('click', () => {
+      const settings = {
+        enabled: document.getElementById('paymentsEnabled').checked,
+        stripeKey: document.getElementById('stripePublishableKey').value.trim(),
+        currency: document.getElementById('stripeCurrency').value,
+        amounts: presetAmounts,
+        categories: [
+          document.getElementById('cat1').value || 'General Donation',
+          document.getElementById('cat2').value || 'Education Fund',
+          document.getElementById('cat3').value || 'Building Fund',
+          document.getElementById('cat4').value || 'Ramadan Fund',
+          document.getElementById('cat5').value || 'Zakat',
+          document.getElementById('cat6').value || 'Sadaqah',
+        ],
+        thankYouMessage: document.getElementById('thankYouMessage').value,
+      };
+      localStorage.setItem('lia_payment_settings', JSON.stringify(settings));
+      showSuccess('Payment settings saved successfully!');
+    });
+
+    // Save org settings
+    document.getElementById('saveOrgBtn').addEventListener('click', () => {
+      const settings = {
+        name: document.getElementById('orgName').value,
+        phone: document.getElementById('orgPhone').value,
+        email: document.getElementById('orgEmail').value,
+        address: document.getElementById('orgAddress').value,
+      };
+      localStorage.setItem('lia_org_settings', JSON.stringify(settings));
+      showSuccess('Organization info saved successfully!');
+    });
+
+    // Test payment
+    document.getElementById('testPaymentBtn').addEventListener('click', () => {
+      window.open('donate.html', '_blank');
+    });
+
+    // Change password
+    document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+      const current = document.getElementById('currentPassword').value;
+      const newPass = document.getElementById('newPassword').value;
+      const storedHash = localStorage.getItem('lia_admin_hash');
+
+      if (!current || !newPass) {
+        alert('Please fill in both password fields.');
+        return;
+      }
+      if (newPass.length < 6) {
+        alert('New password must be at least 6 characters.');
+        return;
+      }
+
+      const currentHash = await hashPassword(current);
+      if (currentHash !== storedHash) {
+        alert('Current password is incorrect.');
+        return;
+      }
+
+      const newHash = await hashPassword(newPass);
+      localStorage.setItem('lia_admin_hash', newHash);
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      showSuccess('Password changed successfully!');
+    });
+
+    // Reset all
+    document.getElementById('resetAllBtn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset ALL settings? This will clear your Stripe configuration, password, and all saved data. This cannot be undone.')) {
+        localStorage.removeItem('lia_payment_settings');
+        localStorage.removeItem('lia_org_settings');
+        localStorage.removeItem('lia_admin_hash');
+        sessionStorage.removeItem('lia_admin_auth');
+        window.location.href = 'admin-login.html';
+      }
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem('lia_admin_auth');
+      window.location.href = 'admin-login.html';
+    });
+
+    function showSuccess(message) {
+      const alert = document.getElementById('successAlert');
+      document.getElementById('successMessage').textContent = message;
+      alert.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => alert.classList.remove('show'), 4000);
+    }
+
+    loadSettings();
+  </script>
+</body>
+</html>

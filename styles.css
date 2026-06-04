@@ -226,6 +226,16 @@ img {
   transform: translateY(-1px);
 }
 
+.nav-admin {
+  opacity: 0.5;
+  font-size: 0.85rem !important;
+  padding: 8px 12px !important;
+}
+
+.nav-admin:hover {
+  opacity: 1;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;

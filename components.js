@@ -28,6 +28,7 @@ function getNavbar(activePage) {
       <ul class="nav-menu" id="navMenu">
         ${links}
         <li><a href="donate.html" class="nav-link nav-donate${activePage === 'Donate' ? ' active' : ''}">Donate</a></li>
+        <li><a href="admin-login.html" class="nav-link nav-admin" title="Admin Login"><i class="fas fa-user-shield"></i></a></li>
       </ul>
     </div>
   </nav>`;
