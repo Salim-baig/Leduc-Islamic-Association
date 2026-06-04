@@ -39,7 +39,7 @@
           </div>
           <div class="event-info">
             <h3>Jumu'ah Prayer</h3>
-            <p><i class="fas fa-clock"></i> 1:30 PM</p>
+            <p><i class="fas fa-clock"></i> <span class="jumah-dynamic-time">1:30 PM</span></p>
             <p><i class="fas fa-location-dot"></i> Leduc Islamic Association</p>
             <p class="event-desc">Weekly Friday congregational prayer with khutbah (sermon). All are welcome.</p>
           </div>
@@ -152,6 +152,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       loadComponents('Events');
       initScrollAnimations();
+      applyJumahTimes();
     });
   </script>
 </body>

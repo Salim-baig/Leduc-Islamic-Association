@@ -108,6 +108,30 @@ function initNavbar() {
   });
 }
 
+function getJumahTime() {
+  const settings = JSON.parse(localStorage.getItem('lia_jumah_settings') || '{}');
+  return settings.prayerTime || '1:30 PM';
+}
+
+function getKhutbahTime() {
+  const settings = JSON.parse(localStorage.getItem('lia_jumah_settings') || '{}');
+  return settings.khutbahTime || '';
+}
+
+function applyJumahTimes() {
+  const jumahTime = getJumahTime();
+  document.querySelectorAll('.jumah-dynamic-time').forEach(el => {
+    el.textContent = jumahTime;
+  });
+  const khutbahTime = getKhutbahTime();
+  document.querySelectorAll('.khutbah-dynamic-time').forEach(el => {
+    if (khutbahTime) {
+      el.textContent = khutbahTime;
+      el.closest('.khutbah-row')?.style.removeProperty('display');
+    }
+  });
+}
+
 function initMobileMenu() {
   const toggle = document.getElementById('navToggle');
   const menu = document.getElementById('navMenu');

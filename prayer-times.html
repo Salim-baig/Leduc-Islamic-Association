@@ -88,7 +88,7 @@
         <div class="jumah-card">
           <i class="fas fa-mosque"></i>
           <h3>Jumu'ah Salah</h3>
-          <p class="jumah-time">1:30 PM</p>
+          <p class="jumah-time jumah-dynamic-time">1:30 PM</p>
           <p>Join us every Friday for the congregational Jumu'ah prayer and khutbah at Leduc Islamic Association.</p>
           <p><i class="fas fa-location-dot"></i> #4 5210-50 Ave, Leduc, AB T9E 6V2</p>
         </div>
@@ -132,6 +132,7 @@
       loadComponents('Prayer Times');
       fetchPrayerTimes();
       initScrollAnimations();
+      applyJumahTimes();
       setInterval(updateNextPrayer, 60000);
     });
   </script>

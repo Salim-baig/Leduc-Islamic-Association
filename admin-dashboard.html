@@ -442,6 +442,31 @@
           </div>
         </div>
 
+        <!-- Friday Prayer Settings -->
+        <div class="admin-section">
+          <h3><i class="fas fa-mosque"></i> Friday Jumu'ah Prayer</h3>
+          <p class="desc">Set the Friday prayer (Jumu'ah) time. This will be displayed on the Home page, Prayer Times page, and Events page.</p>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label>Jumu'ah Prayer Time</label>
+              <input type="text" id="jumahTime" placeholder="e.g. 1:30 PM">
+              <p class="hint">Enter the time for Friday prayer including AM/PM (e.g. 1:30 PM, 12:45 PM).</p>
+            </div>
+            <div class="admin-form-group">
+              <label>Khutbah (Sermon) Start Time <span style="font-weight:400; color: var(--text-muted);">(optional)</span></label>
+              <input type="text" id="khutbahTime" placeholder="e.g. 1:00 PM">
+              <p class="hint">If the khutbah starts before the prayer, enter it here.</p>
+            </div>
+          </div>
+
+          <div class="admin-btn-row">
+            <button class="btn-save" id="saveJumahBtn">
+              <i class="fas fa-save"></i> Save Jumu'ah Settings
+            </button>
+          </div>
+        </div>
+
         <!-- Organization Settings -->
         <div class="admin-section">
           <h3><i class="fas fa-building"></i> Organization Info</h3>
@@ -546,6 +571,11 @@
       document.getElementById('orgPhone').value = orgSettings.phone || '(587) 274-2525';
       document.getElementById('orgEmail').value = orgSettings.email || 'Leducislamicassociation@gmail.com';
       document.getElementById('orgAddress').value = orgSettings.address || '#4 5210-50 Ave, Leduc, AB T9E 6V2';
+
+      // Jumu'ah settings
+      const jumahSettings = JSON.parse(localStorage.getItem('lia_jumah_settings') || '{}');
+      document.getElementById('jumahTime').value = jumahSettings.prayerTime || '1:30 PM';
+      document.getElementById('khutbahTime').value = jumahSettings.khutbahTime || '';
     }
 
     // Donation amounts
@@ -610,6 +640,21 @@
       };
       localStorage.setItem('lia_payment_settings', JSON.stringify(settings));
       showSuccess('Payment settings saved successfully!');
+    });
+
+    // Save Jumu'ah settings
+    document.getElementById('saveJumahBtn').addEventListener('click', () => {
+      const jumahTime = document.getElementById('jumahTime').value.trim();
+      if (!jumahTime) {
+        alert('Please enter the Jumu\'ah prayer time.');
+        return;
+      }
+      const settings = {
+        prayerTime: jumahTime,
+        khutbahTime: document.getElementById('khutbahTime').value.trim(),
+      };
+      localStorage.setItem('lia_jumah_settings', JSON.stringify(settings));
+      showSuccess('Jumu\'ah prayer time updated successfully!');
     });
 
     // Save org settings

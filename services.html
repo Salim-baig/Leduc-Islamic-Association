@@ -40,7 +40,7 @@
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-hands-praying"></i></div>
           <h3>Friday Jumu'ah</h3>
-          <p>Weekly Friday congregational prayer and sermon (khutbah) at 1:30 PM. An essential gathering for the Muslim community.</p>
+          <p>Weekly Friday congregational prayer and sermon (khutbah) at <span class="jumah-dynamic-time">1:30 PM</span>. An essential gathering for the Muslim community.</p>
         </div>
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-star-and-crescent"></i></div>
@@ -144,6 +144,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       loadComponents('Services');
       initScrollAnimations();
+      applyJumahTimes();
     });
   </script>
 </body>
