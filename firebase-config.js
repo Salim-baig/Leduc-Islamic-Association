@@ -12,12 +12,13 @@
 // ============================================
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCR5U3j4YcgBMj1UQc3zZ6lCbps33IGK1U",
+  authDomain: "leduc-islamic-association.firebaseapp.com",
+  projectId: "leduc-islamic-association",
+  storageBucket: "leduc-islamic-association.firebasestorage.app",
+  messagingSenderId: "404843757601",
+  appId: "1:404843757601:web:45889ac785c3017eed6360",
+  measurementId: "G-B21HKYRQDT"
 };
 
 // ============================================
