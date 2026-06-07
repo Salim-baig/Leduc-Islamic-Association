@@ -1,16 +1,20 @@
 // Firestore Security Rules for Leduc Islamic Association
 // Copy these rules to: Firebase Console > Firestore > Rules
 //
+// IMPORTANT: Replace YOUR_ADMIN_UID_HERE with your actual admin UID.
+// You can find your UID in: Admin Dashboard > Security > "Your Admin UID"
+//
 // These rules allow:
 // - Anyone to READ settings (so the website can load prayer times, etc.)
-// - Only authenticated users to WRITE settings (admin only)
+// - ONLY the specified admin user to WRITE settings
 
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /settings/{document} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.auth.uid == 'YOUR_ADMIN_UID_HERE';
     }
   }
 }
